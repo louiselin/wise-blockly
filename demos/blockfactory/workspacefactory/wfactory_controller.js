@@ -569,7 +569,7 @@ WorkspaceFactoryController.prototype.loadCategory = function() {
   // Prompt user for the name of the standard category to load.
   do {
     var name = prompt('Enter the name of the category you would like to import '
-        + '(Logic, Loops, Math, Text, Lists, Colour, Variables, or Functions)');
+        + '(Logic, Trigger, StageEffect, Background, Loops, Math, Text, Lists, Colour, Variables, or Functions)');
     if (!name) {
       return;  // Exit if cancelled.
     }
@@ -646,6 +646,9 @@ WorkspaceFactoryController.prototype.loadCategoryByName = function(name) {
  */
 WorkspaceFactoryController.prototype.loadStandardToolbox = function() {
   this.loadCategoryByName('Logic');
+  this.loadCategoryByName('Trigger');
+  this.loadCategoryByName('StageEffect');
+  this.loadCategoryByName('Background');
   this.loadCategoryByName('Loops');
   this.loadCategoryByName('Math');
   this.loadCategoryByName('Text');
@@ -1287,8 +1290,10 @@ WorkspaceFactoryController.prototype.warnForUndefinedBlocks_ = function() {
   var blocks = this.toolboxWorkspace.getAllBlocks();
   for (var i = 0, block; block = blocks[i]; i++) {
     if (!this.isDefinedBlock(block)) {
-      block.setWarningText(block.type + ' is not defined (it is not a standard '
+      console.log(block.type + ' is not defined (it is not a standard '
           + 'block, \nin your block library, or an imported block)');
+      // block.setWarningText(block.type + ' is not defined (it is not a standard '
+      //     + 'block, \nin your block library, or an imported block)');
     }
   }
 };

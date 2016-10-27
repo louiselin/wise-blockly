@@ -1,0 +1,69 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+	</head>
+	<body>
+		
+		<script type="text/javascript">
+			var jsonString = '{"characters":[ {"name":"BirdMan", "charEffects":[ {"name":"WingsUp"}, {"name":"WingsDown"} ]}, {"name":"ElephantMan", "charEffects":[ {"name":"ShootBubble"}, {"name":"NoseUp"}, {"name":"NoseDown"} ]} ], "backgrounds":[ {"name":"BG-City"}, {"name":"BG-Moutain"} ], "events":[ {"name":"LeftHandUp"}, {"name":"RightHandUp"} ], "effects":[ {"name":"ExplodeEffect"}, {"name":"FlameEffect"} ]}';
+			var jsonParse = JSON.parse(jsonString);
+			var charactersname, charEffectsname, backgroundsname, eventsname, effectsname;
+			var charactersArray = [], charEffectsArray = [], backgroundsArray = [], eventsArray = [], effectsArray = [];
+
+			var str = "";
+			function jsonString() {
+				console.log(jsonString);
+			}
+			for (var i = 0; i < jsonParse.characters.length; i++) {
+				charactersname = jsonParse.characters[i].name;
+				str += "characters name = " + charactersname + "\n";
+				charactersArray.push(charactersname);
+				// console.log("characters name: " + jsonParse.characters[i].name);
+				for(var j = 0; j < jsonParse.characters[i].charEffects.length; j++) {
+					charEffectsname = jsonParse.characters[i].charEffects[j].name;
+					str += "charEffects name = " + charEffectsname + "\n";
+					charEffectsArray.push(charEffectsname);
+					// console.log(jsonParse.characters[i].charEffects[j].name);
+				}
+
+			}
+
+			for (var i = 0; i < jsonParse.backgrounds.length; i++) {
+				backgroundsname = jsonParse.backgrounds[i].name;
+				str += "backgrounds name = " + backgroundsname + "\n";
+				backgroundsArray.push(backgroundsname);
+			}
+			for (var i = 0; i < jsonParse.events.length; i++) {
+				eventsname = jsonParse.events[i].name;
+				str += "events name = " + eventsname + "\n";
+				eventsArray.push(eventsname);
+			}
+			for (var i = 0; i < jsonParse.effects.length; i++) {
+				effectsname = jsonParse.effects[i].name;
+				str += "effects name = " + effectsname + "\n";
+				effectsArray.push(effectsname);
+			}
+
+			// console.log(str);
+			for(var i = 0; i < charactersArray.length; i++) {
+				console.log("characters name = " + charactersArray[i]);
+			}
+			for(var i = 0; i < charEffectsArray.length; i++) {
+				console.log("charEffects name = " + charEffectsArray[i]);
+			}
+			for(var i = 0; i < backgroundsArray.length; i++) {
+				console.log("backgrounds name = " + backgroundsArray[i]);
+			}
+			for(var i = 0; i < eventsArray.length; i++) {
+				console.log("events name = " + eventsArray[i]);
+			}
+			for(var i = 0; i < effectsArray.length; i++) {
+				console.log("effects name = " + effectsArray[i]);
+			}
+			
+			
+
+
+		</script>
+	</body>
+</html>

@@ -5,8 +5,8 @@
   <!-- <meta name="viewport" content="target-densitydpi=device-dpi, height=660, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" /> -->
   <title>Blockly Demo</title>
   <script src="blockly_compressed.js"></script>
-  <script src="../../javascript_compressed.js"></script>
-  <script src="../../msg/js/en.js"></script>
+  <script src="javascript_compressed.js"></script>
+  <script src="en.js"></script>
   <script src="blocks_compressed.js"></script>
   <script src="../../closure-library-master/closure/goog/base.js"></script>
   <script src="factory_utils.js"></script>
@@ -31,17 +31,76 @@
   <link rel="stylesheet" href="../prettify.css">
   <script src="../prettify.js"></script>
   <script>
-    var blocklyFactory;
-    var init = function() {
-      blocklyFactory = new AppController();
-      blocklyFactory.init();
-    };
-    window.addEventListener('load', init);
-    var jsonString ='{"characters":[ {"name":"BirdMan", "charEffects":[ {"name":"WingsUp"}, {"name":"WingsDown"} ]}, {"name":"ElephantMan", "charEffects":[ {"name":"ShootBubble"}, {"name":"NoseUp"}, {"name":"NoseDown"} ]} ], "backgrounds":[ {"name":"BG-City"}, {"name":"BG-Moutain"} ], "events":[ {"name":"LeftHandUp"}, {"name":"RightHandUp"} ], "effects":[ {"name":"ExplodeEffect"}, {"name":"FlameEffect"} ]}';
-    console.log(jsonString);
+
+    function readCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0;i < ca.length;i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1,c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+        }
+        return null;
+    }
+
+    var x = readCookie('rickandmorty');
+    if (x=="140.119.163.200") {
+      var blocklyFactory;
+      var init = function() {
+        blocklyFactory = new AppController();
+        blocklyFactory.init();
+      };
+      window.addEventListener('load', init);
+    } else {
+      alert("Connect and Subscribe!");
+      window.location.replace("mqtt.html");
+    }
   </script>
 </head>
 <body onbeforeunload="return blocklyFactory.confirmLeavePage()">
+      <script type="text/javascript">
+      var jsonString = '{"characters":[ {"name":"BirdMan", "charEffects":[ {"name":"WingsUp"}, {"name":"WingsDown"} ]}, {"name":"ElephantMan", "charEffects":[ {"name":"ShootBubble"}, {"name":"NoseUp"}, {"name":"NoseDown"} ]} ], "backgrounds":[ {"name":"BG-City"}, {"name":"BG-Moutain"} ], "events":[ {"name":"LeftHandUp"}, {"name":"RightHandUp"} ], "effects":[ {"name":"ExplodeEffect"}, {"name":"FlameEffect"} ]}';
+      var jsonParse = JSON.parse(jsonString);
+      var charactersname, charEffectsname, backgroundsname, eventsname, effectsname;
+      var charactersArray = [], backgroundsArray = [], eventsArray = [], effectsArray = [];
+      var cArray = [];
+      function jsonString() {
+        console.log(jsonString);
+      }
+      for (var i = 0; i < jsonParse.characters.length; i++) {
+        charactersname = jsonParse.characters[i].name;
+        charactersArray.push(charactersname);
+        for(var j = 0; j < jsonParse.characters[i].charEffects.length; j++) {
+          charEffectsname = jsonParse.characters[i].charEffects[j].name;
+        }
+
+      }
+      var c_str=''; 
+      for (var i = 0; i < jsonParse.characters.length; i++) {
+        var len = jsonParse.characters[i].charEffects.length;
+        for (var j=0;j<len;j++) {
+          c_str+=jsonParse.characters[i].charEffects[j].name+" ";
+        }
+        cArray.push(jsonParse.characters[i].name+"@"+c_str);
+        // console.log(jsonParse.characters[i].name+"@"+c_str);
+        c_str='';
+      }
+
+      for (var i = 0; i < jsonParse.effects.length; i++) {
+        effectsname = jsonParse.effects[i].name;
+        effectsArray.push(effectsname);
+      }
+
+      for (var i = 0; i < jsonParse.backgrounds.length; i++) {
+        backgroundsname = jsonParse.backgrounds[i].name;
+        backgroundsArray.push(backgroundsname);
+      }
+
+      for (var i = 0; i < jsonParse.events.length; i++) {
+        eventsname = jsonParse.events[i].name;
+        eventsArray.push(eventsname);
+      }
+    </script>
   <h1>
   Blockly Demo
     <!-- <a href="https://developers.google.com/blockly/">Blockly</a> &gt;
@@ -218,8 +277,8 @@
 
       </aside>
 
-      <button id="button_addShadow" style="display: none">Make Shadow</button>
-      <button id="button_removeShadow" style="display: none">Remove Shadow</button>
+      <button id="button_addShadow" style="display:none">Make Shadow</button>
+      <button id="button_removeShadow" style="display:none">Remove Shadow</button>
 
       <aside id="preload_div" style="display:none">
         <div id="preloadHelp" style="display:none">
@@ -363,9 +422,9 @@
             </td>
           </tr>
           <tr>
-            <td style="visibility:hidden;" height="5%">
+            <td style="display:none" height="5%">
               <h3>Block Definition:
-                <select id="format">
+                <select style="display:none" id="format">
                   <option value="JSON">JSON</option>
                   <option value="JavaScript">JavaScript</option>
                   <option value="Manual">Manual edit&hellip;</option>
@@ -374,7 +433,7 @@
             </td>
           </tr>
           <tr>
-            <td style="visibility:hidden;" height="30%">
+            <td style="display:none" height="30%">
               <pre id="languagePre"></pre>
               <textarea id="languageTA"></textarea>
             </td>
@@ -472,11 +531,99 @@
       <block type="colour_hue"><mutation colour="330"></mutation><field name="HUE">330</field></block>
     </category>
     <sep></sep>
+
+
+    
+
     <category name="Character">
-      <block type="birdman"></block>
-      <block type="elephant"></block>
+      <script type="text/javascript">
+        for(var i = 0; i < charactersArray.length; i++) {
+            var c = '';
+            c += '<block type="'+charactersArray[i]+'"></block>';
+            document.write(c);
+        }
+      
+        for (var i =0; i< cArray.length; i++){
+          var c = '', eff = '';
+          var a = cArray[i].split("@");
+          var aa = a[1].split(" ");
+          var b = a[1].split(" ").length-1;
+
+          for (var j=0; j<b; j++){
+            
+            if (j==b-1){
+              eff += '["'+aa[j]+'", "'+aa[j]+'"]';
+            } else {
+              eff += '["'+aa[j]+'", "'+aa[j]+'"], ';
+            }
+            c+= eval('Blockly.Blocks["'+a[0]+'"] = {'+
+                'init: function() {this.appendDummyInput().appendField("'+ a[0] +'")'+
+                                   '.appendField(new Blockly.FieldDropdown(['+eff+
+                                   ']), "NAME")'+
+                  '.appendField(", position(x=")'+
+                  '.appendField(new Blockly.FieldNumber(0), "position_x")'+
+                  '.appendField(", y=")'+
+                  '.appendField(new Blockly.FieldTextInput("0"), "position_y")'+
+                  '.appendField(", z=")'+
+                  '.appendField(new Blockly.FieldTextInput("0"), "position_z")'+
+                  '.appendField(")");'+
+                  'this.setPreviousStatement(true, "Field");'+
+                  'this.setNextStatement(true, "Field");'+
+                  'this.setColour(290);'+
+                  'this.setTooltip("Character for chosing Action.");'+
+                '}};');
+          }  
+        }
+        
+      </script>
+
     </category>
    
+     <category name="StageEffect">
+        <script type="text/javascript">
+          
+          for(var i = 0; i < effectsArray.length; i++) {
+            var c = '';
+            c += '<block type="'+effectsArray[i]+'"></block>';
+            document.write(c);
+
+            var cc = '';
+            cc+= eval('Blockly.Blocks["'+effectsArray[i]+'"] = {'+
+                'init: function() {this.appendDummyInput().appendField("'+ effectsArray[i] +'");'+
+                  'this.setPreviousStatement(true, "Field");'+
+                  'this.setNextStatement(true, "Field");'+
+                  'this.setColour(65);'+
+                  'this.setTooltip("It is Action.");'+
+                '}};');
+          }
+        </script>
+      <!-- <block type="explodeeffect"></block>
+      <block type="flameeffect"></block> -->
+    </category>
+
+
+    <category name="Background">
+      <script type="text/javascript">
+        for(var i = 0; i < backgroundsArray.length; i++) {
+          var c = '';
+            c += '<block type="'+backgroundsArray[i]+'"></block>';
+            document.write(c);
+
+            var cc = '';
+            cc+= eval('Blockly.Blocks["'+backgroundsArray[i]+'"] = {'+
+                'init: function() {this.appendDummyInput().appendField("'+ backgroundsArray[i] +'");'+
+                  'this.setPreviousStatement(true, "Field");'+
+                  'this.setNextStatement(true, "Field");'+
+                  'this.setColour(180);'+
+                  'this.setTooltip("It is Action.");'+
+                '}};');
+          }
+      </script>
+      <!-- <block type="bgcity"></block>
+      <block type="bgmountain"></block> -->
+    </category>
+
+
     <sep></sep>
     <category name="Topic">
       <block type="topic"></block>
@@ -489,23 +636,32 @@
       <block type="controls_if"></block>
     </category>
     <category name="Trigger" colour="20">
-      <block type="righthandup"></block>
-      <block type="lefthandup"></block>
-    </category>
-     <category name="StageEffect" colour="65">
-      <block type="explodeeffect"></block>
-      <block type="flameeffect"></block>
-    </category>
-    <category name="Background" colour="180">
-      <block type="bgcity"></block>
-      <block type="bgmountain"></block>
+      <script type="text/javascript">
+        for(var i = 0; i < eventsArray.length; i++) {
+          var c = '';
+            c += '<block type="'+eventsArray[i]+'"></block>';
+            document.write(c);
+
+            var cc = '';
+            cc+= eval('Blockly.Blocks["'+eventsArray[i]+'"] = {'+
+                'init: function() {this.appendDummyInput().appendField("'+ eventsArray[i] +'");'+
+                  'this.setOutput(true, null);'+
+                  'this.setColour(20);'+
+                  'this.setTooltip("Trigger to Action.");'+
+                '}};');
+        }
+      </script>
+
+      <!-- <block type="righthandup"></block>
+      <block type="lefthandup"></block> -->
     </category>
     
     <sep></sep>
     <category name="Block Library" colour="260" id="blockLibCategory"></category>
   </xml>
 
-
+  
+  
  
 
 </body>

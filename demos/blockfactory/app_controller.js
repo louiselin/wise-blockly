@@ -476,12 +476,34 @@ AppController.prototype.ifCheckedEnable = function(enabled, idArray) {
 /**
  * Assign button click handlers for the block library.
  */
+
+var bgjson = '{                   \
+  "action": "create-background",  \
+  "id": "BGobj-01",               \
+  "name": "BG-City"               \
+}'; 
+var charjson = '{               \
+  "action": "create-character",   \
+  "id": "birdman-01",             \
+  "name": "BirdMan",              \
+  "dataTopic": "mocap-data-01",   \
+  "position": {                   \
+    "x": "0.0",                   \
+    "y": "0.0",                   \
+    "z": "0.0"                    \
+  }                               \
+}                                 \
+';
+
+
 AppController.prototype.assignLibraryClickHandlers = function() {
   var self = this;
 
   // Button for saving block to library.
   document.getElementById('saveToBlockLibraryButton').addEventListener('click',
       function() {
+
+        alert(charjson);
         self.blockLibraryController.saveToBlockLibrary();
       });
 
@@ -574,10 +596,10 @@ AppController.prototype.addBlockFactoryEventListeners = function() {
 
   // document.getElementById('direction')
   //     .addEventListener('change', BlockFactory.updatePreview);
-  // document.getElementById('languageTA')
-  //     .addEventListener('change', BlockFactory.updatePreview);
-  // document.getElementById('languageTA')
-  //     .addEventListener('keyup', BlockFactory.updatePreview);
+  document.getElementById('languageTA')
+      .addEventListener('change', BlockFactory.updatePreview);
+  document.getElementById('languageTA')
+      .addEventListener('keyup', BlockFactory.updatePreview);
   // document.getElementById('format')
   //     .addEventListener('change', BlockFactory.formatChange);
   // document.getElementById('language')
@@ -615,8 +637,8 @@ AppController.prototype.onresize = function(event) {
       document.getElementById('blockly'),
       document.getElementById('blocklyMask'),
       document.getElementById('preview'),
-      // document.getElementById('languagePre'),
-      // document.getElementById('languageTA'),
+      document.getElementById('languagePre'),
+      document.getElementById('languageTA'),
       // document.getElementById('generatorPre'),
     ];
     for (var i = 0, expand; expand = expandList[i]; i++) {

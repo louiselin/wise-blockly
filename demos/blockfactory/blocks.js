@@ -802,27 +802,27 @@ Blockly.Blocks['colour_hue'] = {
 /**
   DIPS Changing here!!!
 */
-Blockly.Blocks['righthandup'] = {
-  init: function() {
-    this.appendDummyInput()
-        .setAlign(Blockly.ALIGN_CENTRE)
-        .appendField("RightHandUp");
-    this.setOutput(true, null);
-    this.setColour(20);
-    this.setTooltip('Trigger to Action.');
-  }
-};
+// Blockly.Blocks['righthandup'] = {
+//   init: function() {
+//     this.appendDummyInput()
+//         .setAlign(Blockly.ALIGN_CENTRE)
+//         .appendField("RightHandUp");
+//     this.setOutput(true, null);
+//     this.setColour(20);
+//     this.setTooltip('Trigger to Action.');
+//   }
+// };
 
-Blockly.Blocks['lefthandup'] = {
-  init: function() {
-    this.appendDummyInput()
-        .setAlign(Blockly.ALIGN_CENTRE)
-        .appendField("LeftHandUp");
-    this.setOutput(true, null);
-    this.setColour(20);
-    this.setTooltip('Trigger to Action.');
-  }
-};
+// Blockly.Blocks['lefthandup'] = {
+//   init: function() {
+//     this.appendDummyInput()
+//         .setAlign(Blockly.ALIGN_CENTRE)
+//         .appendField("LeftHandUp");
+//     this.setOutput(true, null);
+//     this.setColour(20);
+//     this.setTooltip('Trigger to Action.');
+//   }
+// };
 // Blockly.Blocks['righthandup'] = {
 //   init: function() {
 //     this.appendDummyInput()
@@ -846,73 +846,73 @@ Blockly.Blocks['lefthandup'] = {
 //   }
 // };
 
-Blockly.Blocks['explodeeffect'] = {
-  init: function() {
-    this.appendDummyInput()
-        .appendField("ExplodeEffect");
-    this.setPreviousStatement(true, 'Field');
-    this.setNextStatement(true, 'Field');
-    this.setColour(65);
-    this.setTooltip('It is Action.');
-  }
-};
+// Blockly.Blocks['explodeeffect'] = {
+//   init: function() {
+//     this.appendDummyInput()
+//         .appendField("ExplodeEffect");
+//     this.setPreviousStatement(true, 'Field');
+//     this.setNextStatement(true, 'Field');
+//     this.setColour(65);
+//     this.setTooltip('It is Action.');
+//   }
+// };
 
-Blockly.Blocks['flameeffect'] = {
-  init: function() {
-    this.appendDummyInput()
-        .appendField("FlameEffect");
-    this.setPreviousStatement(true, 'Field');
-    this.setNextStatement(true, 'Field');
-    this.setColour(65);
-    this.setTooltip('It is Action.');
-  }
-};
+// Blockly.Blocks['flameeffect'] = {
+//   init: function() {
+//     this.appendDummyInput()
+//         .appendField("FlameEffect");
+//     this.setPreviousStatement(true, 'Field');
+//     this.setNextStatement(true, 'Field');
+//     this.setColour(65);
+//     this.setTooltip('It is Action.');
+//   }
+// };
 
-Blockly.Blocks['bgcity'] = {
-  init: function() {
-    this.appendDummyInput()
-        .appendField("BG_City");
-    this.setPreviousStatement(true, 'Field');
-    this.setNextStatement(true, 'Field');
-    this.setColour(180);
-    this.setTooltip('It is Action.');
-  }
-};
+// Blockly.Blocks['bgcity'] = {
+//   init: function() {
+//     this.appendDummyInput()
+//         .appendField("BG_City");
+//     this.setPreviousStatement(true, 'Field');
+//     this.setNextStatement(true, 'Field');
+//     this.setColour(180);
+//     this.setTooltip('It is Action.');
+//   }
+// };
 
-Blockly.Blocks['bgmountain'] = {
-  init: function() {
-    this.appendDummyInput()
-        .appendField("BG_Mountain");
-    this.setPreviousStatement(true, 'Field');
-    this.setNextStatement(true, 'Field');
-    this.setColour(180);
-    this.setTooltip('It is Action.');
-  }
-};
+// Blockly.Blocks['bgmountain'] = {
+//   init: function() {
+//     this.appendDummyInput()
+//         .appendField("BG_Mountain");
+//     this.setPreviousStatement(true, 'Field');
+//     this.setNextStatement(true, 'Field');
+//     this.setColour(180);
+//     this.setTooltip('It is Action.');
+//   }
+// };
 
-Blockly.Blocks['elephant'] = {
-  init: function() {
-    this.appendDummyInput()
-        .appendField("Elephant")
-        .appendField(new Blockly.FieldDropdown([["ShootBubble", "shootbubble"], ["NoseUp", "noseup"], ["NoseDown", "nosedown"]]), "NAME");
-    this.setPreviousStatement(true, 'Field');
-    this.setNextStatement(true, 'Field');
-    this.setColour(290);
-    this.setTooltip('Character for chosing Action.');
-  }
-};
+// Blockly.Blocks['ElephantMan'] = {
+//   init: function() {
+//     this.appendDummyInput()
+//         .appendField("Elephant")
+//         .appendField(new Blockly.FieldDropdown([["ShootBubble", "shootbubble"], ["NoseUp", "noseup"], ["NoseDown", "nosedown"]]), "NAME");
+//     this.setPreviousStatement(true, 'Field');
+//     this.setNextStatement(true, 'Field');
+//     this.setColour(290);
+//     this.setTooltip('Character for chosing Action.');
+//   }
+// };
 
-Blockly.Blocks['birdman'] = {
-  init: function() {
-    this.appendDummyInput()
-        .appendField("BirdMan")
-        .appendField(new Blockly.FieldDropdown([["WingsUp", "wingsup"], ["WingsDown", "wingsdown"]]), "NAME");
-    this.setPreviousStatement(true, 'Field');
-    this.setNextStatement(true, 'Field');
-    this.setColour(290);
-    this.setTooltip('Character for chosing Action.');
-  }
-};
+// Blockly.Blocks['BirdMan'] = {
+//   init: function() {
+//     this.appendDummyInput()
+//         .appendField("BirdMan")
+//         .appendField(new Blockly.FieldDropdown([["WingsUp", "wingsup"], ["WingsDown", "wingsdown"]]), "NAME");
+//     this.setPreviousStatement(true, 'Field');
+//     this.setNextStatement(true, 'Field');
+//     this.setColour(290);
+//     this.setTooltip('Character for chosing Action.');
+//   }
+// };
 
 Blockly.Blocks['topic'] = {
   init: function() {

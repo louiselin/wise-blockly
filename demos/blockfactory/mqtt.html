@@ -1,75 +1,98 @@
-<html>
+<!DOCTYPE html>
 <head>
-  <title>WebSocket Echo Client</title>
-  <meta charset="UTF-8" />
-  <script>
-    "use strict";
-    // Initialize everything when the window finishes loading
-    window.addEventListener("load", function(event) {
-      var status = document.getElementById("status");
-      var url = document.getElementById("url");
-      var open = document.getElementById("open");
-      var close = document.getElementById("close");
-      var send = document.getElementById("send");
-      var text = document.getElementById("text");
-      var message = document.getElementById("message");
-      var socket;
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js" type="text/javascript"></script>
+  <title>mqtt js client demo</title>
+  <script type="text/javascript">
+    var wsbroker = "140.119.163.200";  //mqtt websocket enabled brokers (topic)
+    var wsport = 9001 // port for above
+    var client = new Paho.MQTT.Client(wsbroker, wsport, "myclientid_" + parseInt(Math.random() * 100, 10));
+    
+    var options = {
+      timeout: 3,
+      onSuccess: function () {
+        console.log("Connection succeeded!");
+        document.getElementById("conn_result").innerHTML = "<p style='color:red;'>Connection succeeded!</p>";
+        
+        // Connection succeeded; subscribe to our topic, you can add multile lines of these
+        client.subscribe('UnityToDips', {qos: 1});
 
-      status.textContent = "Not Connected";
-      url.value = "scheme://host:port/resource";
-      close.disabled = true;
-      send.disabled = true;
+        publish_message();
+        //redirected!
+        createCookie('rickandmorty', wsbroker, 1);
+        alert("Connection succeeded!");
+        window.location.replace("demomqtt.html");
 
-      // Create a new connection when the Connect button is clicked
-      open.addEventListener("click", function(event) {
-        open.disabled = true;
-        socket = new WebSocket(url.value, "echo-protocol");
+        // message from server which is under subcribe 
+        client.onMessageArrived = onMessageArrived;
+      },
+      onFailure: function (message) {
+        console.log("Connection failed: " + message.errorMessage);
+        document.getElementById("conn_result").innerHTML = "<p style='color:red;'>Connection failed by error message: "+message.errorMessage+"</p>";
+        
+        document.getElementById("rec_message").innerHTML = "<p style='color:blue;'><i>none</i></p>";
+      }
+    };
+    var tmpList = [];
+    // 收到訊息
+    function onMessageArrived(message) {
+      console.log(message.destinationName, ' -- ', message.payloadString);
+      tmpList.push(message.payloadString);
+      document.getElementById("rec_message").innerHTML = "<p style='color:blue;'>Message: " + JSON.stringify(tmpList) + "</p>";
+    }
+    // 發佈訊息
+    function publish_message() {
+        var input_text = document.getElementById("mqtt_text");
+        var payload = input_text.value;
+        var message = new Paho.MQTT.Message(payload);
+        message.destinationName = "DipsToUnity";
+        client.send(message);
+        document.getElementById("send_message").innerHTML = "<p style='color:blue;'>"+ payload + "</p>";
+        alert("Successfully.");
+    }
+    function init() {
+      client.connect(options);
+    }
 
-        socket.addEventListener("open", function(event) {
-          close.disabled = false;
-          send.disabled = false;
-          status.textContent = "Connected";
-        });
-
-        // Display messages received from the server
-        socket.addEventListener("message", function(event) {
-          message.textContent = "Server Says: " + event.data;
-        });
-
-        // Display any errors that occur
-        socket.addEventListener("error", function(event) {
-          message.textContent = "Error: " + event;
-        });
-
-        socket.addEventListener("close", function(event) {
-          open.disabled = false;
-          status.textContent = "Not Connected";
-        });
-      });
-
-      // Close the connection when the Disconnect button is clicked
-      close.addEventListener("click", function(event) {
-        close.disabled = true;
-        send.disabled = true;
-        message.textContent = "";
-        socket.close();
-      });
-
-      // Send text to the server when the Send button is clicked
-      send.addEventListener("click", function(event) {
-        socket.send(text.value);
-        text.value = "";
-      });
-    });
+    function createCookie(name,value,days) {
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime()+(days*24*60*60*1000));
+            var expires = "; expires="+date.toGMTString();
+        }
+        else var expires = "";
+        document.cookie = name+"="+value+expires+"; path=/";
+    }
   </script>
 </head>
+
 <body>
-  Status: <span id="status"></span><br />
-  URL: <input id="url" /><br />
-  <input id="open" type="button" value="Connect" />&nbsp;
-  <input id="close" type="button" value="Disconnect" /><br />
-  <input id="send" type="button" value="Send" />&nbsp;
-  <input id="text" /><br />
-  <span id="message"></span>
+  <h1>Demo Web w/ paho-mqtt web page.</h1>
+  
+  <fieldset>
+  <legend id="Connect" > Connect and Subscribe </legend>
+    Make a connection to the server(like unity), and set up a call back used if a 
+    message arrives for this client. <br>
+    Make a subscription to topic "/mitsuruog".
+    <br>
+    <input type="button" value="Connect and Subscribe" name="Connect" id="mqtt_conn_sub" onClick="init();" />
+    <br>
+    <p><div id="conn_result">[Connect Result]</div></p>
+    <hr>
+    Receive Message <div id="rec_message"></div>
+  </fieldset>
+   
+  <fieldset>
+  <legend id="Send" > Send to Unity </legend>
+    <!-- Create a Message object containing the word "Hello" and then publish it at
+    the server. -->
+    Create a Message to publish it at the server.
+    <br>
+    <input type="text" id="mqtt_text" value='{"action": "request-data"}' />
+    <button id="mqtt_pub" onload="publish_message();">Publish</button>
+    <hr>
+    Send Message <div id="send_message"></div>
+  </fieldset>
+
 </body>
 </html>

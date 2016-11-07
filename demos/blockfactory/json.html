@@ -9,23 +9,53 @@
 			var jsonParse = JSON.parse(jsonString);
 			var charactersname, charEffectsname, backgroundsname, eventsname, effectsname;
 			var charactersArray = [], charEffectsArray = [], backgroundsArray = [], eventsArray = [], effectsArray = [];
-
+			var c_Array = [];
 			var str = "";
 			function jsonString() {
 				console.log(jsonString);
 			}
+			var c_str='';	
 			for (var i = 0; i < jsonParse.characters.length; i++) {
-				charactersname = jsonParse.characters[i].name;
-				str += "characters name = " + charactersname + "\n";
-				charactersArray.push(charactersname);
-				// console.log("characters name: " + jsonParse.characters[i].name);
-				for(var j = 0; j < jsonParse.characters[i].charEffects.length; j++) {
-					charEffectsname = jsonParse.characters[i].charEffects[j].name;
-					str += "charEffects name = " + charEffectsname + "\n";
-					charEffectsArray.push(charEffectsname);
-					// console.log(jsonParse.characters[i].charEffects[j].name);
-				}
+				
+				var len = jsonParse.characters[i].charEffects.length;
 
+				for (var j=0;j<len;j++) {
+				
+					c_str+=jsonParse.characters[i].charEffects[j].name+" ";
+				}
+				console.log(jsonParse.characters[i].name+"@"+c_str);
+				c_Array.push(jsonParse.characters[i].name+"@"+c_str);
+				c_str='';
+				// c_Array.push(jsonParse.characters[i].name+"@"+c_effectsArray);
+				// charactersname = jsonParse.characters[i].name;
+				// str += "characters name = " + charactersname + "\n";
+				// charactersArray.push(charactersname);
+				// // console.log("characters name: " + jsonParse.characters[i].name);
+				// for(var j = 0; j < jsonParse.characters[i].charEffects.length; j++) {
+				// 	charEffectsname = jsonParse.characters[i].charEffects[j].name;
+				// 	str += "charEffects name = " + charEffectsname + "\n";
+				// 	charEffectsArray.push(charactersname+","+charEffectsname);
+				// 	// console.log(jsonParse.characters[i].charEffects[j].name);
+				// }
+
+			}
+
+			for (var i =0; i< c_Array.length; i++){
+				var a = c_Array[i].split("@");
+				console.log(a[0]);
+
+				var aa = a[1].split(" ");
+				var b = a[1].split(" ").length-1;
+
+				for (var j=0; j<b; j++){
+					var eff = '';
+		            if (j!=b-1){
+		              eff += '["'+aa[j]+'", "'+aa[j]+'"]';
+		            } else {
+		              eff += '["'+aa[j]+'", "'+aa[j]+'"], ';
+		            }
+		            console.log(eff);
+				}
 			}
 
 			for (var i = 0; i < jsonParse.backgrounds.length; i++) {
@@ -49,7 +79,9 @@
 				console.log("characters name = " + charactersArray[i]);
 			}
 			for(var i = 0; i < charEffectsArray.length; i++) {
-				console.log("charEffects name = " + charEffectsArray[i]);
+				var str = charEffectsArray[i].split(",");
+
+				console.log(str[0]+" "+str[1]);
 			}
 			for(var i = 0; i < backgroundsArray.length; i++) {
 				console.log("backgrounds name = " + backgroundsArray[i]);

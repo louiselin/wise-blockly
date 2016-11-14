@@ -502,8 +502,8 @@ AppController.prototype.assignLibraryClickHandlers = function() {
   // Button for saving block to library.
   document.getElementById('saveToBlockLibraryButton').addEventListener('click',
       function() {
-
-        alert(charjson);
+        alert("test");
+        // alert(BlockFactory.updatePreview);
         self.blockLibraryController.saveToBlockLibrary();
       });
 

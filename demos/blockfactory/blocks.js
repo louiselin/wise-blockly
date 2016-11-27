@@ -914,6 +914,7 @@ Blockly.Blocks['colour_hue'] = {
 //   }
 // };
 
+
 Blockly.Blocks['topic'] = {
   init: function() {
     this.appendDummyInput()
@@ -925,6 +926,8 @@ Blockly.Blocks['topic'] = {
     this.setTooltip('Subscribe Topic to mocap.');
   }
 };
+
+
 
 /**
  * Check to see if more than one field has this name.

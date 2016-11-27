@@ -502,9 +502,18 @@ AppController.prototype.assignLibraryClickHandlers = function() {
   // Button for saving block to library.
   document.getElementById('saveToBlockLibraryButton').addEventListener('click',
       function() {
-        alert("test");
-        // alert(BlockFactory.updatePreview);
-        self.blockLibraryController.saveToBlockLibrary();
+        // var format = document.getElementById('format').value;
+        var code = document.getElementById('languagePre').textContent;
+        var jp = JSON.parse(code);
+        var blockType = jp.type;
+        if(blockType != 'block_type') {
+          alert(code);
+          self.blockLibraryController.saveToBlockLibrary();
+        } else {
+          alert('You cannot save a block under the name "block_type". Try changing ' +
+            'the name before saving. Then, click on the "Block Library" button ' +
+            'to view your saved blocks.');
+        }
       });
 
   // Button for removing selected block from library.

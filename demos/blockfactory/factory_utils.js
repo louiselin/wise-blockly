@@ -251,7 +251,7 @@ FactoryUtils.formatJson_ = function(blockType, rootBlock) {
     JS.colour = hue;
   }
   JS.tooltip = '';
-  JS.helpUrl = 'http://www.example.com/';
+  JS.helpUrl = 'http://www.louise.com/';
   return JSON.stringify(JS, null, '  ');
 };
 

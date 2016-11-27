@@ -128,7 +128,7 @@ BlockLibraryView.prototype.updateButtons =
     if (!isInLibrary) {
       // Block type has not been saved to library yet. Disable the delete button
       // and allow user to save.
-      this.saveButton.textContent = 'Push "' + blockType + '"';
+      this.saveButton.textContent = 'Save "' + blockType + '"';
       this.saveButton.disabled = false;
       this.deleteButton.disabled = true;
     } else {

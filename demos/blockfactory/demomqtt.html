@@ -560,13 +560,13 @@
             c+= eval('Blockly.Blocks["'+a[0]+'"] = {'+
                 'init: function() {this.appendDummyInput().appendField("'+ a[0] +'")'+
                                    '.appendField(new Blockly.FieldDropdown(['+eff+
-                                   ']), "NAME")'+
+                                   ']), "EFF")'+
                   '.appendField(", position(x=")'+
                   '.appendField(new Blockly.FieldNumber(0), "position_x")'+
                   '.appendField(", y=")'+
-                  '.appendField(new Blockly.FieldTextInput("0"), "position_y")'+
+                  '.appendField(new Blockly.FieldNumber("0"), "position_y")'+
                   '.appendField(", z=")'+
-                  '.appendField(new Blockly.FieldTextInput("0"), "position_z")'+
+                  '.appendField(new Blockly.FieldNumber("0"), "position_z")'+
                   '.appendField(")");'+
                   'this.setPreviousStatement(true, "Field");'+
                   'this.setNextStatement(true, "Field");'+

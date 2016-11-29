@@ -919,7 +919,7 @@ Blockly.Blocks['topic'] = {
   init: function() {
     this.appendDummyInput()
         .appendField("Subscribe Topic")
-        .appendField(new Blockly.FieldTextInput("mocap-data-01"), "NAME");
+        .appendField(new Blockly.FieldTextInput("mocap-data-01"), "TOPIC");
     this.setPreviousStatement(true, 'Field');
     this.setNextStatement(true, 'Field');
     this.setColour(330);

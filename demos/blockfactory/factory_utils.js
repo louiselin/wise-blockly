@@ -375,6 +375,7 @@ FactoryUtils.getFieldsJs_ = function(block) {
           // Result: 'hello'
           fields.push(FactoryUtils.escapeString(block.getFieldValue('TEXT')));
           break;
+        
         case 'field_input':
           // Result: new Blockly.FieldTextInput('Hello'), 'GREET'
           fields.push('new Blockly.FieldTextInput(' +
@@ -478,6 +479,58 @@ FactoryUtils.getFieldsJson_ = function(block) {
   while (block) {
     if (!block.disabled && !block.getInheritedDisabled()) {
       switch (block.type) {
+        // dips insert json 
+        case 'BirdMan':
+          fields.push({
+            type: block.type,
+            action: 'create-character',
+            text: block.getFieldValue('EFF'),
+            position_x: block.getFieldValue('position_x'),
+            position_y: block.getFieldValue('position_y'),
+            position_z: block.getFieldValue('position_z')
+          });
+          break;
+        case 'Elephant':
+          fields.push({
+            type: block.type,
+            action: 'create-character',
+            text: block.getFieldValue('EFF'),
+            position_x: block.getFieldValue('position_x'),
+            position_y: block.getFieldValue('position_y'),
+            position_z: block.getFieldValue('position_z')
+          });
+          break;
+        case 'BG'+'-City':
+          fields.push({
+            type: block.type,
+            action: 'create-background'
+          });
+          break;
+        case 'BG'+'-Moutain':
+          fields.push({
+            type: block.type,
+            action: 'create-background'
+          });
+          break;
+        case 'ExplodeEffect':
+          fields.push({
+            type: block.type,
+            action: 'create-effect'
+          });
+          break;
+        case 'FlameEffect':
+          fields.push({
+            type: block.type,
+            action: 'create-effect'
+          });
+          break;
+        case 'topic':
+          fields.push({
+            type: block.type,
+            action: 'create-topic',
+            text: block.getFieldValue('TOPIC')
+          });
+          break;  
         case 'field_static':
           // Result: 'hello'
           fields.push(block.getFieldValue('TEXT'));

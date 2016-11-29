@@ -501,13 +501,48 @@ AppController.prototype.assignLibraryClickHandlers = function() {
 
   // Button for saving block to library.
   document.getElementById('saveToBlockLibraryButton').addEventListener('click',
+      
       function() {
         // var format = document.getElementById('format').value;
         var code = document.getElementById('languagePre').textContent;
         var jp = JSON.parse(code);
         var blockType = jp.type;
         if(blockType != 'block_type') {
-          alert(code);
+          var length = jp.args0.length;
+          var str = '';
+          var new_json = { };
+          var jj = '';
+
+          if (length == 2) {
+            new_json.action = jp.args0[0].action;
+            new_json.id = jp.type;
+            new_json.name = jp.args0[0].type;
+            new_json.dataTopic = jp.args0[1].text;
+            new_json.position_json = { };
+            new_json.position_json.x = jp.args0[0].position_x;
+            new_json.position_json.y = jp.args0[0].position_y;
+            new_json.position_json.z = jp.args0[0].position_z;
+
+            if(jp.args0[0].position_x != null || jp.args0[0].position_y != null || jp.args0[0].position_z != null) {
+              jj = JSON.stringify(new_json);
+              alert(jj);
+            } else if (jp.args0[1].action != 'topic') {
+              alert("The Block is at the wrong place!");
+            } else {
+              alert("Wrong Block to be chosen!");
+            }
+
+          } else if (length == 1) {
+            new_json.action = jp.args0[0].action;
+            new_json.id = jp.type;
+            new_json.name = jp.args0[0].type;
+
+            jj = JSON.stringify(new_json);
+            alert(jj);
+          } else {
+            alert("Wrong Format to be accecpted!");
+          }
+
           self.blockLibraryController.saveToBlockLibrary();
         } else {
           alert('You cannot save a block under the name "block_type". Try changing ' +

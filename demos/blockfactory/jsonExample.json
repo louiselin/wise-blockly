@@ -32,3 +32,7 @@
     "name" : "FlameEffect"
   } ]
 }
+
+
+      // var jsonString = '{"characters":[ {"name":"BirdMan", "charEffects":[ {"name":"WingsUp"}, {"name":"WingsDown"} ]}, {"name":"ElephantMan", "charEffects":[ {"name":"ShootBubble"}, {"name":"NoseUp"}, {"name":"NoseDown"} ]} ], "backgrounds":[ {"name":"BG-City"}, {"name":"BG-Moutain"} ], "events":[ {"name":"LeftHandUp"}, {"name":"RightHandUp"} ], "effects":[ {"name":"ExplodeEffect"}, {"name":"FlameEffect"} ]}';
+

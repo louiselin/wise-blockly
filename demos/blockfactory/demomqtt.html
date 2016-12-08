@@ -30,36 +30,36 @@
   <link rel="stylesheet" href="factory.css">
   <link rel="stylesheet" href="../prettify.css">
   <script src="../prettify.js"></script>
-  <script>
-
-    function readCookie(name) {
-        var nameEQ = name + "=";
-        var ca = document.cookie.split(';');
-        for(var i=0;i < ca.length;i++) {
-            var c = ca[i];
-            while (c.charAt(0)==' ') c = c.substring(1,c.length);
-            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-        }
-        return null;
-    }
-
-    var x = readCookie('rickandmorty');
-    if (x=="140.119.163.200") {
-      var blocklyFactory;
-      var init = function() {
-        blocklyFactory = new AppController();
-        blocklyFactory.init();
-      };
-      window.addEventListener('load', init);
-    } else {
-      alert("Connect and Subscribe First!");
-      window.location.replace("mqtt.html");
-    }
-  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js" type="text/javascript"></script>
 </head>
 <body onbeforeunload="return blocklyFactory.confirmLeavePage()">
       <script type="text/javascript">
-      var jsonString = '{"characters":[ {"name":"BirdMan", "charEffects":[ {"name":"WingsUp"}, {"name":"WingsDown"} ]}, {"name":"ElephantMan", "charEffects":[ {"name":"ShootBubble"}, {"name":"NoseUp"}, {"name":"NoseDown"} ]} ], "backgrounds":[ {"name":"BG-City"}, {"name":"BG-Moutain"} ], "events":[ {"name":"LeftHandUp"}, {"name":"RightHandUp"} ], "effects":[ {"name":"ExplodeEffect"}, {"name":"FlameEffect"} ]}';
+
+      function readCookie(name) {
+          var nameEQ = name + "=";
+          var ca = document.cookie.split(';');
+          for(var i=0;i < ca.length;i++) {
+              var c = ca[i];
+              while (c.charAt(0)==' ') c = c.substring(1,c.length);
+              if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+          }
+          return null;
+      }
+
+      var jsonString = readCookie('rickandmorty');
+      // alert(x);
+      if (jsonString != null) {
+        var blocklyFactory;
+        var init = function() {
+          blocklyFactory = new AppController();
+          blocklyFactory.init();
+        };
+        window.addEventListener('load', init);
+      } else {
+        alert("Connect and Subscribe First!");
+        window.location.replace("mqtt.html");
+      }
+
       var jsonParse = JSON.parse(jsonString);
       var charactersname, charEffectsname, backgroundsname, eventsname, effectsname;
       var charactersArray = [], backgroundsArray = [], eventsArray = [], effectsArray = [];
@@ -562,11 +562,11 @@
                                    '.appendField(new Blockly.FieldDropdown(['+eff+
                                    ']), "EFF")'+
                   '.appendField(", position(x=")'+
-                  '.appendField(new Blockly.FieldNumber(0), "position_x")'+
+                  '.appendField(new Blockly.FieldNumber(0.0), "position_x")'+
                   '.appendField(", y=")'+
-                  '.appendField(new Blockly.FieldNumber("0"), "position_y")'+
+                  '.appendField(new Blockly.FieldNumber("0.0"), "position_y")'+
                   '.appendField(", z=")'+
-                  '.appendField(new Blockly.FieldNumber("0"), "position_z")'+
+                  '.appendField(new Blockly.FieldNumber("0.0"), "position_z")'+
                   '.appendField(")");'+
                   'this.setPreviousStatement(true, "Field");'+
                   'this.setNextStatement(true, "Field");'+

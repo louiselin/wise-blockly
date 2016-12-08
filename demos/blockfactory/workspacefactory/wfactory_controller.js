@@ -354,6 +354,7 @@ WorkspaceFactoryController.prototype.exportXmlFile = function(exportMode) {
  * Export the options object to be used for the Blockly inject call. Gets a
  * file name from the user and downloads the options object to that file.
  */
+
 WorkspaceFactoryController.prototype.exportInjectFile = function() {
   var fileName = prompt('File Name for starter Blockly workspace code:',
                         'workspace.js');

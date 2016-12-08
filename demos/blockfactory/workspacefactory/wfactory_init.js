@@ -155,6 +155,7 @@ WorkspaceFactoryInit.assignWorkspaceFactoryClickHandlers_ =
         controller.exportInjectFile();
         blocklyFactory.closeModal();
       });
+
   document.getElementById('dropdown_exportToolbox').addEventListener
       ('click',
       function() {

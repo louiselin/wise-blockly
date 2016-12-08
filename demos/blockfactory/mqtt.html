@@ -18,8 +18,7 @@
         client.subscribe('UnityToDips', {qos: 1});
 
         publish_message();
-        //redirected!
-        createCookie('rickandmorty', wsbroker, 1);
+        
         alert("Connection succeeded!");
         window.location.replace("demomqtt.html");
 
@@ -37,8 +36,13 @@
     // 收到訊息
     function onMessageArrived(message) {
       console.log(message.destinationName, ' -- ', message.payloadString);
-      tmpList.push(message.payloadString);
-      document.getElementById("rec_message").innerHTML = "<p style='color:blue;'>Message: " + JSON.stringify(tmpList) + "</p>";
+      var mm = message.payloadString;
+      // tmpList.push(message.payloadString);
+      // document.getElementById("rec_message").innerHTML = JSON.stringify(mm);
+      document.getElementById("rec_message").innerHTML = mm;
+      
+      //redirected!
+      createCookie('rickandmorty', mm, 1);
     }
     // 發佈訊息
     function publish_message() {
@@ -47,8 +51,8 @@
         var message = new Paho.MQTT.Message(payload);
         message.destinationName = "DipsToUnity";
         client.send(message);
-        document.getElementById("send_message").innerHTML = "<p style='color:blue;'>"+ payload + "</p>";
-        alert("Successfully.");
+        document.getElementById("send_message").innerHTML = payload;
+        // alert("Successfully.");
     }
     function init() {
       client.connect(options);
@@ -73,7 +77,7 @@
   <legend id="Connect" > Connect and Subscribe </legend>
     Make a connection to the server(like unity), and set up a call back used if a 
     message arrives for this client. <br>
-    Make a subscription to topic "/mitsuruog".
+    Make a subscription to topic "/UnityToDips".
     <br>
     <input type="button" value="Connect and Subscribe" name="Connect" id="mqtt_conn_sub" onClick="init();" />
     <br>
@@ -89,7 +93,7 @@
     Create a Message to publish it at the server.
     <br>
     <input type="text" id="mqtt_text" value='{"action": "request-data"}' />
-    <button id="mqtt_pub" onload="publish_message();">Publish</button>
+    <button id="mqtt_pub" onclick="publish_message();">Publish</button>
     <hr>
     Send Message <div id="send_message"></div>
   </fieldset>

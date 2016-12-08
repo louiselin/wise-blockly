@@ -518,14 +518,37 @@ AppController.prototype.assignLibraryClickHandlers = function() {
             new_json.id = jp.type;
             new_json.name = jp.args0[0].type;
             new_json.dataTopic = jp.args0[1].text;
-            new_json.position_json = { };
-            new_json.position_json.x = jp.args0[0].position_x;
-            new_json.position_json.y = jp.args0[0].position_y;
-            new_json.position_json.z = jp.args0[0].position_z;
+            new_json.position = { };
+            new_json.position.x = jp.args0[0].position_x;
+            new_json.position.y = jp.args0[0].position_y;
+            new_json.position.z = jp.args0[0].position_z;
 
             if(jp.args0[0].position_x != null || jp.args0[0].position_y != null || jp.args0[0].position_z != null) {
               jj = JSON.stringify(new_json);
-              alert(jj);
+              console.log(jj);
+              
+              // To DipsToUnity
+                var wsbroker = "140.119.163.200";  
+                var wsport = 9001;
+                var client = new Paho.MQTT.Client(wsbroker, wsport, "myclientid_" + parseInt(Math.random() * 100, 10));
+
+                var options = {
+                  timeout: 3,
+                  onSuccess: function () {
+                    console.log("Connection succeeded!");
+                    client.subscribe('UnityToDips', {qos: 1});
+                    var message = new Paho.MQTT.Message(jj);
+                    message.destinationName = "DipsToUnity";
+                    client.send(message);
+                    alert("Block Created successfully!");
+                  },
+                  onFailure: function (message) {
+                    alert("Connect and Subscribe First!");
+                    window.location.replace("mqtt.html");
+                  }
+                };
+                client.connect(options);
+                
             } else if (jp.args0[1].action != 'topic') {
               alert("The Block is at the wrong place!");
             } else {
@@ -538,7 +561,31 @@ AppController.prototype.assignLibraryClickHandlers = function() {
             new_json.name = jp.args0[0].type;
 
             jj = JSON.stringify(new_json);
-            alert(jj);
+            console.log(jj);
+
+            // To DipsToUnity
+            var wsbroker = "140.119.163.200";  
+            var wsport = 9001;
+            var client = new Paho.MQTT.Client(wsbroker, wsport, "myclientid_" + parseInt(Math.random() * 100, 10));
+
+            var options = {
+              timeout: 3,
+              onSuccess: function () {
+                console.log("Connection succeeded!");
+                client.subscribe('UnityToDips', {qos: 1});
+                var message = new Paho.MQTT.Message(jj);
+                message.destinationName = "DipsToUnity";
+                client.send(message);
+                alert("Block Created successfully!");
+              },
+              onFailure: function (message) {
+                alert("Connect and Subscribe First!");
+                window.location.replace("mqtt.html");
+              }
+            };
+            client.connect(options);
+            
+            
           } else {
             alert("Wrong Format to be accecpted!");
           }
@@ -550,6 +597,18 @@ AppController.prototype.assignLibraryClickHandlers = function() {
             'to view your saved blocks.');
         }
       });
+
+ // dips to unity 
+  document.getElementById('executetounity').addEventListener('click', 
+    function() {
+      // var code = document.getElementById('languagePre').textContent;
+      // controller.exportInjectFile();
+      // blocklyFactory.closeModal();
+      // alert(data);
+    });
+
+  
+
 
   // Button for removing selected block from library.
   document.getElementById('removeBlockFromLibraryButton').addEventListener(

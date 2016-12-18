@@ -345,6 +345,7 @@ WorkspaceFactoryController.prototype.exportXmlFile = function(exportMode) {
     throw new Error ("Unknown export mode: " + exportMode);
   }
 
+
   // Download file.
   var data = new Blob([configXml], {type: 'text/xml'});
   this.view.createAndDownloadFile(fileName, data);
@@ -458,6 +459,21 @@ WorkspaceFactoryController.prototype.saveStateFromWorkspace = function() {
     this.model.savePreloadXml(
         Blockly.Xml.workspaceToDom(this.toolboxWorkspace));
   }
+
+    // dips to unity 
+  document.getElementById('executetounity').addEventListener('click', 
+    function() {
+      // var code = document.getElementById('languageTA').textContent;
+      console.log("workspace console");
+      console.log(this.model.savePreloadXml(
+        Blockly.Xml.workspaceToDom(this.toolboxWorkspace)));
+      // var code = document.getElementById('languagePre').textContent;
+      // controller.exportInjectFile();
+      // blocklyFactory.closeModal();
+      // alert(data);
+    });
+
+
 };
 
 /**
@@ -474,7 +490,12 @@ WorkspaceFactoryController.prototype.reinjectPreview = function(tree) {
   this.previewWorkspace = Blockly.inject('preview_blocks', injectOptions);
   Blockly.Xml.domToWorkspace(this.generator.generateWorkspaceXml(),
       this.previewWorkspace);
+
+
+
 };
+
+
 
 /**
  * Tied to "change name" button. Changes the name of the selected category.

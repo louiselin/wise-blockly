@@ -598,15 +598,7 @@ AppController.prototype.assignLibraryClickHandlers = function() {
         }
       });
 
- // dips to unity 
-  document.getElementById('executetounity').addEventListener('click', 
-    function() {
-      // var code = document.getElementById('languagePre').textContent;
-      // controller.exportInjectFile();
-      // blocklyFactory.closeModal();
-      // alert(data);
-    });
-
+ 
   
 
 
@@ -614,7 +606,49 @@ AppController.prototype.assignLibraryClickHandlers = function() {
   document.getElementById('removeBlockFromLibraryButton').addEventListener(
     'click',
       function() {
-        self.blockLibraryController.removeFromBlockLibrary();
+        var code = document.getElementById('languagePre').textContent;
+        var jp = JSON.parse(code);
+
+        var blockType = jp.type;
+
+        if(blockType != 'block_type') {
+
+          var new_json = { }
+          new_json.action = 'destroy-object';
+          new_json.id = blockType;
+
+          var jj = JSON.stringify(new_json);
+          
+
+          // To DipsToUnity
+                var wsbroker = "140.119.163.200";  
+                var wsport = 9001;
+                var client = new Paho.MQTT.Client(wsbroker, wsport, "myclientid_" + parseInt(Math.random() * 100, 10));
+
+                var options = {
+                  timeout: 3,
+                  onSuccess: function () {
+                    console.log("Connection succeeded!");
+                    client.subscribe('UnityToDips', {qos: 1});
+                    var message = new Paho.MQTT.Message(jj);
+                    message.destinationName = "DipsToUnity";
+                    client.send(message);
+                    console.log(jj);
+                    alert("Block Deleted!");
+                  },
+                  onFailure: function (message) {
+                    alert("Connect and Subscribe First!");
+                    window.location.replace("mqtt.html");
+                  }
+                };
+                client.connect(options);
+
+          self.blockLibraryController.removeFromBlockLibrary();
+        } else {
+          alert('You cannot save a block under the name "block_type". Try changing ' +
+            'the name before saving. Then, click on the "Block Library" button ' +
+            'to view your saved blocks.');
+        }
       });
 
   // Button for clearing the block library.

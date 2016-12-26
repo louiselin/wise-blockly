@@ -599,7 +599,6 @@ AppController.prototype.assignLibraryClickHandlers = function() {
       });
 
  
-  
 
 
   // Button for removing selected block from library.

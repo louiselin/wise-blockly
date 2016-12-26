@@ -329,6 +329,7 @@ WorkspaceFactoryController.prototype.exportXmlFile = function(exportMode) {
     return;
   }
 
+  
   // Generate XML.
   if (exportMode == WorkspaceFactoryController.MODE_TOOLBOX) {
     // Export the toolbox XML.
@@ -345,16 +346,19 @@ WorkspaceFactoryController.prototype.exportXmlFile = function(exportMode) {
     throw new Error ("Unknown export mode: " + exportMode);
   }
 
-
   // Download file.
   var data = new Blob([configXml], {type: 'text/xml'});
   this.view.createAndDownloadFile(fileName, data);
  };
 
+
+
+
 /**
  * Export the options object to be used for the Blockly inject call. Gets a
  * file name from the user and downloads the options object to that file.
  */
+
 
 WorkspaceFactoryController.prototype.exportInjectFile = function() {
   var fileName = prompt('File Name for starter Blockly workspace code:',
@@ -460,19 +464,6 @@ WorkspaceFactoryController.prototype.saveStateFromWorkspace = function() {
         Blockly.Xml.workspaceToDom(this.toolboxWorkspace));
   }
 
-    // dips to unity 
-  document.getElementById('executetounity').addEventListener('click', 
-    function() {
-      // var code = document.getElementById('languageTA').textContent;
-      console.log("workspace console");
-      console.log(this.model.savePreloadXml(
-        Blockly.Xml.workspaceToDom(this.toolboxWorkspace)));
-      // var code = document.getElementById('languagePre').textContent;
-      // controller.exportInjectFile();
-      // blocklyFactory.closeModal();
-      // alert(data);
-    });
-
 
 };
 
@@ -490,6 +481,66 @@ WorkspaceFactoryController.prototype.reinjectPreview = function(tree) {
   this.previewWorkspace = Blockly.inject('preview_blocks', injectOptions);
   Blockly.Xml.domToWorkspace(this.generator.generateWorkspaceXml(),
       this.previewWorkspace);
+
+      // dips to unity 
+   document.getElementById('executetounity').addEventListener('click', 
+     function() {
+      // this.previewWorkspace.dispose();
+      // var injectOptions = this.readOptions_();
+      injectOptions['toolbox'] = Blockly.Xml.domToPrettyText(tree);
+      this.previewWorkspace = Blockly.inject('preview_blocks', injectOptions);
+      Blockly.Xml.domToWorkspace(this.generator.generateWorkspaceXml(),
+        this.previewWorkspace);
+      var code = Blockly.DIPS.workspaceToCode(workspace);
+      controller.exportInjectFile();
+      var preview_blocks = document.getElementById('tool');
+      
+      console.log(this.previewWorkspace);
+
+
+        // var createrule = '{\
+        //   "action": "create-rule",\
+        //   "id": "rule-wings",\
+        //   "event": "LeftHandUp",\
+        //   "effectType": "characterEffect",\
+        //   "effectName": "WingsUp",\
+        //   "targetId": "bm_up"\
+        // }';
+
+       // var createeffect = '{\
+       //   "action": "create-rule",\
+       //   "id": "rule-explode",\
+       //   "event": "RightHandUp",\
+       //   "effectType": "other",\
+       //   "effectName": "FlameEffect",\
+       //   "targetId": "bm_up"\
+       // }';
+
+
+       // // To DipsToUnity
+        // var wsbroker = "140.119.163.200";  
+        // var wsport = 9001;
+        // var client = new Paho.MQTT.Client(wsbroker, wsport, "myclientid_" + parseInt(Math.random() * 100, 10));
+
+        // var options = {
+        //   timeout: 3,
+        //   onSuccess: function () {
+        //     console.log("Connection succeeded!");
+        //     client.subscribe('UnityToDips', {qos: 1});
+        //     var message = new Paho.MQTT.Message(createrule);
+        //     message.destinationName = "DipsToUnity";
+        //     client.send(message);
+        //     // console.log(createrule);
+        //     alert("SEND!");
+        //   },
+        //   onFailure: function (message) {
+        //     alert("Connect and Subscribe First!");
+        //     window.location.replace("mqtt.html");
+        //   }
+        // };
+        // client.connect(options);
+      
+   });
 
 
 

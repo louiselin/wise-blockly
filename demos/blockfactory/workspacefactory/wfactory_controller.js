@@ -328,7 +328,7 @@ WorkspaceFactoryController.prototype.exportXmlFile = function(exportMode) {
   if (!fileName) {  // If cancelled.
     return;
   }
-
+  var configXml = '';
   
   // Generate XML.
   if (exportMode == WorkspaceFactoryController.MODE_TOOLBOX) {
@@ -384,6 +384,9 @@ WorkspaceFactoryController.prototype.printConfig = function() {
   // Print XML.
   window.console.log(Blockly.Xml.domToPrettyText
       (this.generator.generateToolboxXml()));
+
+
+
 };
 
 /**
@@ -406,7 +409,6 @@ WorkspaceFactoryController.prototype.updatePreview = function() {
     // Get toolbox XML.
     var tree = Blockly.Options.parseToolboxTree(
         this.generator.generateToolboxXml());
-
     // No categories, creates a simple flyout.
     if (tree.getElementsByTagName('category').length == 0) {
       // No categories, creates a simple flyout.
@@ -435,6 +437,8 @@ WorkspaceFactoryController.prototype.updatePreview = function() {
 
   // Reenable events.
   Blockly.Events.enable();
+
+
 };
 
 /**
@@ -483,19 +487,19 @@ WorkspaceFactoryController.prototype.reinjectPreview = function(tree) {
       this.previewWorkspace);
 
       // dips to unity 
-   document.getElementById('executetounity').addEventListener('click', 
-     function() {
+   // document.getElementById('executetounity').addEventListener('click', 
+   //   function() {
       // this.previewWorkspace.dispose();
       // var injectOptions = this.readOptions_();
-      injectOptions['toolbox'] = Blockly.Xml.domToPrettyText(tree);
-      this.previewWorkspace = Blockly.inject('preview_blocks', injectOptions);
-      Blockly.Xml.domToWorkspace(this.generator.generateWorkspaceXml(),
-        this.previewWorkspace);
-      var code = Blockly.DIPS.workspaceToCode(workspace);
-      controller.exportInjectFile();
-      var preview_blocks = document.getElementById('tool');
+      // injectOptions['toolbox'] = Blockly.Xml.domToPrettyText(tree);
+      // this.previewWorkspace = Blockly.inject('preview_blocks', injectOptions);
+      // Blockly.Xml.domToWorkspace(this.generator.generateWorkspaceXml(),
+      //   this.previewWorkspace);
+      // var code = Blockly.DIPS.workspaceToCode(workspace);
+      // controller.exportInjectFile();
+      // var preview_blocks = document.getElementById('toolboox');
       
-      console.log(this.previewWorkspace);
+      // console.log(previewWorkspace);
 
 
         // var createrule = '{\
@@ -540,7 +544,7 @@ WorkspaceFactoryController.prototype.reinjectPreview = function(tree) {
         // };
         // client.connect(options);
       
-   });
+   // });
 
 
 
@@ -1168,6 +1172,7 @@ WorkspaceFactoryController.prototype.generateNewOptions = function() {
 
   this.reinjectPreview(Blockly.Options.parseToolboxTree
       (this.generator.generateToolboxXml()));
+
 };
 
 /**
@@ -1394,3 +1399,29 @@ WorkspaceFactoryController.prototype.hasProceduresCategory = function() {
 WorkspaceFactoryController.prototype.hasUnsavedChanges = function() {
   return this.hasUnsavedToolboxChanges || this.hasUnsavedPreloadChanges;
 };
+
+
+
+// DIPS New Create
+// WorkspaceFactoryController.prototype.reinjectPreview = function(tree) {
+//   this.previewWorkspace.dispose();
+//   var injectOptions = this.readOptions_();
+//   injectOptions['toolbox'] = Blockly.Xml.domToPrettyText(tree);
+//   this.previewWorkspace = Blockly.inject('preview_blocks', injectOptions);
+//   Blockly.Xml.domToWorkspace(this.generator.generateWorkspaceXml(),
+//           this.previewWorkspace);
+
+
+   
+
+//        // dips to unity 
+//    document.getElementById('executetounity').addEventListener('click', 
+//      function() {
+//       console.log(Blockly.inject('preview_blocks', injectOptions));
+
+//       console.log(Blockly.Xml.domToWorkspace(this.generator.generateWorkspaceXml(),
+//           Blockly.inject('preview_blocks', injectOptions));
+//     });
+
+// };
+

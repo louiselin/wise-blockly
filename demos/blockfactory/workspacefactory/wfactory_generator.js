@@ -131,6 +131,11 @@ WorkspaceFactoryGenerator.prototype.generateToolboxXml = function() {
         
         
    //});
+
+   // document.getElementById('executetounity').addEventListener('click', 
+   //   function() {
+   //    console.log(xmlDom);
+   //  });
   return xmlDom;
  };
 
@@ -154,6 +159,8 @@ WorkspaceFactoryGenerator.prototype.generateWorkspaceXml = function() {
   generatedXml.setAttribute('id', 'workspaceBlocks');
   generatedXml.setAttribute('style', 'display:none');
   return generatedXml;
+
+
 };
 
 /**
@@ -263,3 +270,87 @@ WorkspaceFactoryGenerator.prototype.getDefinedBlocks = function(blockTypes) {
   }
   return blocks;
 };
+
+var x = [];
+
+// DIPS New Create
+WorkspaceFactoryGenerator.prototype.generateToolboxXml = function() {
+  // Create DOM for XML.
+  
+  var xmlDom = goog.dom.createDom('xml',
+      {
+        'id' : 'toolbox',
+        'style' : 'display:none'
+      });
+
+  if (!this.model.hasElements()) {
+    // Toolbox has no categories. Use XML directly from workspace.
+    this.loadToHiddenWorkspace_(this.model.getSelectedXml());
+    this.appendHiddenWorkspaceToDom_(xmlDom);
+    x.push(xmlDom);
+
+  } else {
+    // Toolbox has categories.
+    // Assert that selected != null
+    if (!this.model.getSelected()) {
+      throw new Error('Selected is null when the toolbox is empty.');
+    }
+
+    var xml = this.model.getSelectedXml();
+    var toolboxList = this.model.getToolboxList();
+
+    for (var i = 0; i < toolboxList.length; i++) {
+      var element = toolboxList[i];
+      if (element.type == ListElement.TYPE_SEPARATOR) {
+        // If the next element is a separator.
+        var nextElement = goog.dom.createDom('sep');
+      } else if (element.type == ListElement.TYPE_CATEGORY) {
+        // If the next element is a category.
+        var nextElement = goog.dom.createDom('category');
+        nextElement.setAttribute('name', element.name);
+        // Add a colour attribute if one exists.
+        if (element.color != null) {
+          nextElement.setAttribute('colour', element.color);
+        }
+        // Add a custom attribute if one exists.
+        if (element.custom != null) {
+          nextElement.setAttribute('custom', element.custom);
+        }
+        // Load that category to hidden workspace, setting user-generated shadow
+        // blocks as real shadow blocks.
+        this.loadToHiddenWorkspace_(element.xml);
+        this.appendHiddenWorkspaceToDom_(nextElement);
+      }
+      
+      xmlDom.appendChild(nextElement);
+ 
+    }
+
+  }
+     // Rule create 
+   document.getElementById('executetounity').addEventListener('click', 
+     function() {
+      // var test = "<bookstore><book>" +
+      //   "<title id='a' >Everyday Italian</title>" +
+      //   "<author>Giada De Laurentiis</author>" +
+      //   "<year>2005</year>" +
+      //   "</book></bookstore>";
+      // var parser = new DOMParser();
+      // var xmlDoc = parser.parseFromString(test,"text/xml");
+      // // .childNodes[0].nodeValue
+      // console.log(xmlDoc.getElementsByTagName("title")[0].id);
+      
+      // var parser = new DOMParser();
+      // var xmlDoc = parser.parseFromString(xmlDom,"text/xml");
+      // var x = xmlDoc.getElementsByTagName('block')[0];
+      
+      console.log(x.length);
+      console.log(x[x.length-1]);
+
+    });
+
+
+   
+  return xmlDom;
+ };
+

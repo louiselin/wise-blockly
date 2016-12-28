@@ -502,47 +502,47 @@ WorkspaceFactoryController.prototype.reinjectPreview = function(tree) {
       // console.log(previewWorkspace);
 
 
-        // var createrule = '{\
-        //   "action": "create-rule",\
-        //   "id": "rule-wings",\
-        //   "event": "LeftHandUp",\
-        //   "effectType": "characterEffect",\
-        //   "effectName": "WingsUp",\
-        //   "targetId": "bm_up"\
-        // }';
+   //      var createrule = '{\
+   //        "action": "create-rule",\
+   //        "id": "rule-wings",\
+   //        "event": "LeftHandUp",\
+   //        "effectType": "characterEffect",\
+   //        "effectName": "WingsUp",\
+   //        "targetId": "bird_man_wings_up"\
+   //      }';
 
-       // var createeffect = '{\
-       //   "action": "create-rule",\
-       //   "id": "rule-explode",\
-       //   "event": "RightHandUp",\
-       //   "effectType": "other",\
-       //   "effectName": "FlameEffect",\
-       //   "targetId": "bm_up"\
-       // }';
+   //     var createeffect = '{\
+   //       "action": "create-rule",\
+   //       "id": "rule-explode",\
+   //       "event": "RightHandUp",\
+   //       "\ ": "other",\
+   //       "effectName": "FlameEffect",\
+   //       "targetId": "bird_man_wings_up"\
+   //     }';
 
 
-       // // To DipsToUnity
-        // var wsbroker = "140.119.163.200";  
-        // var wsport = 9001;
-        // var client = new Paho.MQTT.Client(wsbroker, wsport, "myclientid_" + parseInt(Math.random() * 100, 10));
+   //     // To DipsToUnity
+   //      var wsbroker = "140.119.163.200";  
+   //      var wsport = 9001;
+   //      var client = new Paho.MQTT.Client(wsbroker, wsport, "myclientid_" + parseInt(Math.random() * 100, 10));
 
-        // var options = {
-        //   timeout: 3,
-        //   onSuccess: function () {
-        //     console.log("Connection succeeded!");
-        //     client.subscribe('UnityToDips', {qos: 1});
-        //     var message = new Paho.MQTT.Message(createrule);
-        //     message.destinationName = "DipsToUnity";
-        //     client.send(message);
-        //     // console.log(createrule);
-        //     alert("SEND!");
-        //   },
-        //   onFailure: function (message) {
-        //     alert("Connect and Subscribe First!");
-        //     window.location.replace("mqtt.html");
-        //   }
-        // };
-        // client.connect(options);
+   //      var options = {
+   //        timeout: 3,
+   //        onSuccess: function () {
+   //          console.log("Connection succeeded!");
+   //          client.subscribe('UnityToDips', {qos: 1});
+   //          var message = new Paho.MQTT.Message(createrule);
+   //          message.destinationName = "DipsToUnity";
+   //          client.send(message);
+   //          // console.log(createrule);
+   //          alert("SEND!");
+   //        },
+   //        onFailure: function (message) {
+   //          alert("Connect and Subscribe First!");
+   //          window.location.replace("mqtt.html");
+   //        }
+   //      };
+   //      client.connect(options);
       
    // });
 

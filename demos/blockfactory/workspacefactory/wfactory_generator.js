@@ -331,21 +331,37 @@ WorkspaceFactoryGenerator.prototype.generateToolboxXml = function() {
    document.getElementById('executetounity').addEventListener('click', 
      function() {
       // var test = "<bookstore><book>" +
-      //   "<title id='a' >Everyday Italian</title>" +
+      //   "<title type='a' >Everyday Italian</title>" +
       //   "<author>Giada De Laurentiis</author>" +
       //   "<year>2005</year>" +
       //   "</book></bookstore>";
       // var parser = new DOMParser();
       // var xmlDoc = parser.parseFromString(test,"text/xml");
       // // .childNodes[0].nodeValue
-      // console.log(xmlDoc.getElementsByTagName("title")[0].id);
+      // console.log(xmlDoc.getElementsByTagName("bookstore")[0]);
       
       // var parser = new DOMParser();
       // var xmlDoc = parser.parseFromString(xmlDom,"text/xml");
       // var x = xmlDoc.getElementsByTagName('block')[0];
       
-      console.log(x.length);
-      console.log(x[x.length-1]);
+
+      // console.log(x[x.length-1]);
+
+
+      var obj = x[x.length-1]
+      var childNodes = obj.childNodes;
+      var c = [];
+      for(var i=0; i<childNodes.length; i++){
+          var child = childNodes[i];
+          // console.log(child.nodeName);
+          if(child.nodeType == 1 && child.nodeName == 'BLOCK'){
+            c.push(child);
+          }
+        
+      }
+      
+      console.log(c[0]);
+      
 
     });
 

@@ -156,6 +156,13 @@ WorkspaceFactoryInit.assignWorkspaceFactoryClickHandlers_ =
         blocklyFactory.closeModal();
       });
 
+      // Rule create
+    document.getElementById('executetounity').addEventListener('click',
+      function() {
+        controller.exportXmlFile(WorkspaceFactoryController.MODE_TOOLBOX);
+        blocklyFactory.closeModal();
+     });
+
   document.getElementById('dropdown_exportToolbox').addEventListener
       ('click',
       function() {

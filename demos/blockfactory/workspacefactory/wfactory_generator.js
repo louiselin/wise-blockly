@@ -114,8 +114,8 @@ WorkspaceFactoryGenerator.prototype.generateToolboxXml = function() {
   }
   // var tmpList = [];
   // tmpList.push(xmlDom);
-      // dips to unity 
-  //  document.getElementById('executetounity').addEventListener('click', 
+      // dips to unity
+  //  document.getElementById('executetounity').addEventListener('click',
   //    function() {
         // this.previewWorkspace.dispose();
         // var injectOptions = this.readOptions_();
@@ -126,13 +126,13 @@ WorkspaceFactoryGenerator.prototype.generateToolboxXml = function() {
         // var code = Blockly.DIPS.workspaceToCode(workspace);
         // controller.exportInjectFile();
         // var preview_blocks = document.getElementById('tool');
-        
+
    //     console.log("Create Rule!");
-        
-        
+
+
    //});
 
-   // document.getElementById('executetounity').addEventListener('click', 
+   // document.getElementById('executetounity').addEventListener('click',
    //   function() {
    //    console.log(xmlDom);
    //  });
@@ -158,6 +158,8 @@ WorkspaceFactoryGenerator.prototype.generateWorkspaceXml = function() {
   var generatedXml = Blockly.Xml.workspaceToDom(this.hiddenWorkspace);
   generatedXml.setAttribute('id', 'workspaceBlocks');
   generatedXml.setAttribute('style', 'display:none');
+
+
   return generatedXml;
 
 
@@ -268,26 +270,31 @@ WorkspaceFactoryGenerator.prototype.getDefinedBlocks = function(blockTypes) {
     blocks.push(FactoryUtils.getDefinedBlock(blockTypes[i],
         this.hiddenWorkspace));
   }
+
+
   return blocks;
 };
 
-var x = [];
+
 
 // DIPS New Create
 WorkspaceFactoryGenerator.prototype.generateToolboxXml = function() {
   // Create DOM for XML.
-  
+
   var xmlDom = goog.dom.createDom('xml',
       {
         'id' : 'toolbox',
         'style' : 'display:none'
       });
 
+
+
   if (!this.model.hasElements()) {
     // Toolbox has no categories. Use XML directly from workspace.
     this.loadToHiddenWorkspace_(this.model.getSelectedXml());
     this.appendHiddenWorkspaceToDom_(xmlDom);
-    x.push(xmlDom);
+
+
 
   } else {
     // Toolbox has categories.
@@ -321,52 +328,54 @@ WorkspaceFactoryGenerator.prototype.generateToolboxXml = function() {
         this.loadToHiddenWorkspace_(element.xml);
         this.appendHiddenWorkspaceToDom_(nextElement);
       }
-      
+
       xmlDom.appendChild(nextElement);
- 
+
     }
 
   }
-     // Rule create 
-   document.getElementById('executetounity').addEventListener('click', 
-     function() {
-      // var test = "<bookstore><book>" +
-      //   "<title type='a' >Everyday Italian</title>" +
-      //   "<author>Giada De Laurentiis</author>" +
-      //   "<year>2005</year>" +
-      //   "</book></bookstore>";
-      // var parser = new DOMParser();
-      // var xmlDoc = parser.parseFromString(test,"text/xml");
-      // // .childNodes[0].nodeValue
-      // console.log(xmlDoc.getElementsByTagName("bookstore")[0]);
-      
-      // var parser = new DOMParser();
-      // var xmlDoc = parser.parseFromString(xmlDom,"text/xml");
-      // var x = xmlDoc.getElementsByTagName('block')[0];
-      
-
-      // console.log(x[x.length-1]);
 
 
-      var obj = x[x.length-1]
-      var childNodes = obj.childNodes;
-      var c = [];
-      for(var i=0; i<childNodes.length; i++){
-          var child = childNodes[i];
-          // console.log(child.nodeName);
-          if(child.nodeType == 1 && child.nodeName == 'BLOCK'){
-            c.push(child);
-          }
-        
-      }
-      
-      console.log(c[0]);
-      
+//   // Rule create
+// document.getElementById('executetounity').addEventListener('click',
+//   function() {
+//   //  var test = "<bookstore><book>" +
+//   //    "<title type='a' >Everyday Italian</title>" +
+//   //    "<author>Giada De Laurentiis</author>" +
+//   //    "<year>2005</year>" +
+//   //    "</book></bookstore>";
+//   //  var parser = new DOMParser();
+//   //  var xmlDoc = parser.parseFromString(test,"text/xml");
+//   //  // .childNodes[0].nodeValue
+//   //  console.log(xmlDoc.getElementsByTagName("bookstore")[0]);
+//
+//   //  var parser = new DOMParser();
+//   //  var xmlDoc = parser.parseFromString(xmlDom,"text/xml");
+//   //  var x = xmlDoc.getElementsByTagName('block')[0];
+//    //
+//    //
+//   //  console.log(x);
+//    //
+//    //
+//   //  var obj = x[x.length-1]
+//   //  var childNodes = obj.childNodes;
+//   //  var c = [];
+//   //  for(var i=0; i<childNodes.length; i++){
+//   //      var child = childNodes[i];
+//   //      // console.log(child.nodeName);
+//   //      if(child.nodeType == 1 && child.nodeName == 'BLOCK'){
+//   //        c.push(child);
+//   //      }
+//   //
+//   //  }
+//
+//   //  console.log(c[0]);
+//
+//
+//  });
 
-    });
-
-
-   
   return xmlDom;
- };
 
+
+
+ };

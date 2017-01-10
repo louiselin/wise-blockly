@@ -319,36 +319,136 @@ WorkspaceFactoryController.prototype.clearAndLoadElement = function(id) {
  */
 WorkspaceFactoryController.prototype.exportXmlFile = function(exportMode) {
   // Get file name.
-  if (exportMode == WorkspaceFactoryController.MODE_TOOLBOX) {
-    var fileName = prompt('File Name for toolbox XML:', 'toolbox.xml');
-  } else {
-    var fileName = prompt('File Name for pre-loaded workspace XML:',
-                          'workspace.xml');
-  }
-  if (!fileName) {  // If cancelled.
-    return;
-  }
+  // if (exportMode == WorkspaceFactoryController.MODE_TOOLBOX) {
+  //   var fileName = prompt('File Name for toolbox XML:', 'toolbox.xml');
+  // } else {
+  //   var fileName = prompt('File Name for pre-loaded workspace XML:',
+  //                         'workspace.xml');
+  // }
+  // if (!fileName) {  // If cancelled.
+  //   return;
+  // }
   var configXml = '';
-  
+
   // Generate XML.
   if (exportMode == WorkspaceFactoryController.MODE_TOOLBOX) {
     // Export the toolbox XML.
     var configXml = Blockly.Xml.domToPrettyText
         (this.generator.generateToolboxXml());
     this.hasUnsavedToolboxChanges = false;
-  } else if (exportMode == WorkspaceFactoryController.MODE_PRELOAD) {
-    // Export the pre-loaded block XML.
-    var configXml = Blockly.Xml.domToPrettyText
-        (this.generator.generateWorkspaceXml());
-    this.hasUnsavedPreloadChanges = false;
-  } else {
-    // Unknown mode. Throw error.
-    throw new Error ("Unknown export mode: " + exportMode);
   }
+  // } else if (exportMode == WorkspaceFactoryController.MODE_PRELOAD) {
+  //   // Export the pre-loaded block XML.
+  //   var configXml = Blockly.Xml.domToPrettyText
+  //       (this.generator.generateWorkspaceXml());
+  //   this.hasUnsavedPreloadChanges = false;
+  // } else {
+  //   // Unknown mode. Throw error.
+  //   throw new Error ("Unknown export mode: " + exportMode);
+  // }
+     var parser = new DOMParser();
+     var xmlDoc = parser.parseFromString(configXml,"text/xml");
+     // confirm if_else
+     var block_type = xmlDoc.getElementsByTagName('block')[0].getAttributeNode('type').value;
+
+     try {
+         if (block_type == 'controls_if') {
+           // [if] => value
+           var if_block = xmlDoc.getElementsByTagName('value')[0].getAttributeNode('name').value;
+           if (if_block == 'IF0') {
+             var x = xmlDoc.getElementsByTagName('value')[0].getElementsByTagName('block')[0].getAttributeNode('type').value;
+           } else {
+             alert('Empty upper Block');
+           }
+
+           var else_block = xmlDoc.getElementsByTagName('statement')[0].getAttributeNode('name').value;
+           if (else_block == 'DO0') {
+             var y = xmlDoc.getElementsByTagName('statement')[0].getElementsByTagName('block')[0].getAttributeNode('type').value;
+           } else {
+             alert('Empty bottom Block');
+           }
+
+         } else {
+           alert('Error type to be built.');
+         }
+
+
+      // console.log(configXml);
+
+
+      var code = document.getElementById('languagePre').textContent;
+      var j = JSON.parse(code);
+      var len = j.args0.length;
+      var define_action = j.args0[0].action;
+      var effect_type = '';
+      if (define_action == 'create-character') {
+        effect_type = 'characterEffect';
+      } else {
+        effect_type = 'other';
+      }
+
+      var effect_name = '';
+
+      if (len == 1) {
+        effect_name = j.args0[0].type;
+      } else if (len == 2) {
+        effect_name = j.args0[0].text;
+      }
+
+      // console.log('code', code);
+      // console.log('effect_name', effect_name);
+
+      // xml to json
+      var c_id = "";
+      var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+      for( var i=0; i < 7; i++ ) c_id += possible.charAt(Math.floor(Math.random() * possible.length));
+
+
+      var create_rule = { };
+      var cr = '';
+      create_rule.action = 'create-rule';
+      create_rule.id = c_id;
+      create_rule.event = x;
+      create_rule.effectType = effect_type;
+      create_rule.effectName = effect_name;
+      create_rule.targetId = y;
+
+      cr = JSON.stringify(create_rule);
+      console.log(cr);
+
+      // To DipsToUnity
+      var wsbroker = "140.119.163.200";
+      var wsport = 9001;
+      var client = new Paho.MQTT.Client(wsbroker, wsport, "myclientid_" + parseInt(Math.random() * 100, 10));
+
+      var options = {
+        timeout: 3,
+        onSuccess: function () {
+          console.log("Connection succeeded!");
+          client.subscribe('UnityToDips', {qos: 1});
+          var message = new Paho.MQTT.Message(cr);
+          message.destinationName = "DipsToUnity";
+          client.send(message);
+          alert("Create Rule successfully!");
+        },
+        onFailure: function (message) {
+          alert("Connect and Subscribe First!");
+          window.location.replace("mqtt.html");
+        }
+      };
+      client.connect(options);
+
+
+
+
+    } catch (err) {
+      alert('Error type to be built.');
+    }
+
 
   // Download file.
-  var data = new Blob([configXml], {type: 'text/xml'});
-  this.view.createAndDownloadFile(fileName, data);
+  // var data = new Blob([configXml], {type: 'text/xml'});
+  // this.view.createAndDownloadFile(fileName, data);
  };
 
 
@@ -486,8 +586,8 @@ WorkspaceFactoryController.prototype.reinjectPreview = function(tree) {
   Blockly.Xml.domToWorkspace(this.generator.generateWorkspaceXml(),
       this.previewWorkspace);
 
-      // dips to unity 
-   // document.getElementById('executetounity').addEventListener('click', 
+      // dips to unity
+   // document.getElementById('executetounity').addEventListener('click',
    //   function() {
       // this.previewWorkspace.dispose();
       // var injectOptions = this.readOptions_();
@@ -498,7 +598,7 @@ WorkspaceFactoryController.prototype.reinjectPreview = function(tree) {
       // var code = Blockly.DIPS.workspaceToCode(workspace);
       // controller.exportInjectFile();
       // var preview_blocks = document.getElementById('toolboox');
-      
+
       // console.log(previewWorkspace);
 
 
@@ -522,7 +622,7 @@ WorkspaceFactoryController.prototype.reinjectPreview = function(tree) {
 
 
    //     // To DipsToUnity
-   //      var wsbroker = "140.119.163.200";  
+   //      var wsbroker = "140.119.163.200";
    //      var wsport = 9001;
    //      var client = new Paho.MQTT.Client(wsbroker, wsport, "myclientid_" + parseInt(Math.random() * 100, 10));
 
@@ -543,7 +643,7 @@ WorkspaceFactoryController.prototype.reinjectPreview = function(tree) {
    //        }
    //      };
    //      client.connect(options);
-      
+
    // });
 
 
@@ -1412,10 +1512,10 @@ WorkspaceFactoryController.prototype.hasUnsavedChanges = function() {
 //           this.previewWorkspace);
 
 
-   
 
-//        // dips to unity 
-//    document.getElementById('executetounity').addEventListener('click', 
+
+//        // dips to unity
+//    document.getElementById('executetounity').addEventListener('click',
 //      function() {
 //       console.log(Blockly.inject('preview_blocks', injectOptions));
 
@@ -1424,4 +1524,3 @@ WorkspaceFactoryController.prototype.hasUnsavedChanges = function() {
 //     });
 
 // };
-

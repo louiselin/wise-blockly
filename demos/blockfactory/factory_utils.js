@@ -375,7 +375,7 @@ FactoryUtils.getFieldsJs_ = function(block) {
           // Result: 'hello'
           fields.push(FactoryUtils.escapeString(block.getFieldValue('TEXT')));
           break;
-        
+
         case 'field_input':
           // Result: new Blockly.FieldTextInput('Hello'), 'GREET'
           fields.push('new Blockly.FieldTextInput(' +
@@ -479,22 +479,32 @@ FactoryUtils.getFieldsJson_ = function(block) {
   while (block) {
     if (!block.disabled && !block.getInheritedDisabled()) {
       switch (block.type) {
-        // dips insert json 
-        case 'BirdMan':
+        // dips insert json
+        // case 'BirdMan':
+        //   fields.push({
+        //     type: block.type,
+        //     action: 'create-character',
+        //     text: block.getFieldValue('EFF'),
+        //     position_x: block.getFieldValue('position_x'),
+        //     position_y: block.getFieldValue('position_y'),
+        //     position_z: block.getFieldValue('position_z')
+        //   });
+        //   break;
+        // case 'Elephant':
+        //   fields.push({
+        //     type: block.type,
+        //     action: 'create-character',
+        //     text: block.getFieldValue('EFF'),
+        //     position_x: block.getFieldValue('position_x'),
+        //     position_y: block.getFieldValue('position_y'),
+        //     position_z: block.getFieldValue('position_z')
+        //   });
+        //   break;
+        case 'pepper':
           fields.push({
             type: block.type,
             action: 'create-character',
-            text: block.getFieldValue('EFF'),
-            position_x: block.getFieldValue('position_x'),
-            position_y: block.getFieldValue('position_y'),
-            position_z: block.getFieldValue('position_z')
-          });
-          break;
-        case 'Elephant':
-          fields.push({
-            type: block.type,
-            action: 'create-character',
-            text: block.getFieldValue('EFF'),
+            dataTopic: "mocap-data-01",
             position_x: block.getFieldValue('position_x'),
             position_y: block.getFieldValue('position_y'),
             position_z: block.getFieldValue('position_z')
@@ -512,6 +522,36 @@ FactoryUtils.getFieldsJson_ = function(block) {
             action: 'create-background'
           });
           break;
+        case 'BG'+'-scenes1'+'-01':
+          fields.push({
+            type: block.type,
+            action: 'create-background'
+          });
+          break;
+        case 'BG'+'-scenes2'+'-01':
+          fields.push({
+            type: block.type,
+            action: 'create-background'
+          });
+          break;
+        case 'BG'+'-scenes3'+'-01':
+          fields.push({
+            type: block.type,
+            action: 'create-background'
+          });
+          break;
+        case 'BG'+'-scene3'+'-02':
+          fields.push({
+            type: block.type,
+            action: 'create-background'
+          });
+          break;
+        case 'BG'+'-scene4'+'-01':
+          fields.push({
+            type: block.type,
+            action: 'create-background'
+          });
+          break;
         case 'ExplodeEffect':
           fields.push({
             type: block.type,
@@ -524,13 +564,13 @@ FactoryUtils.getFieldsJson_ = function(block) {
             action: 'create-effect'
           });
           break;
-        case 'topic':
+        case 'RainbowEffect':
           fields.push({
             type: block.type,
-            action: 'create-topic',
-            text: block.getFieldValue('TOPIC')
+            action: 'create-effect'
           });
-          break;  
+          break;
+        
         case 'field_static':
           // Result: 'hello'
           fields.push(block.getFieldValue('TEXT'));

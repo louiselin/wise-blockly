@@ -7,28 +7,29 @@
     var wsbroker = "140.119.163.200";  //mqtt websocket enabled brokers (topic)
     var wsport = 9001 // port for above
     var client = new Paho.MQTT.Client(wsbroker, wsport, "myclientid_" + parseInt(Math.random() * 100, 10));
-    
+
     var options = {
       timeout: 3,
       onSuccess: function () {
         console.log("Connection succeeded!");
         document.getElementById("conn_result").innerHTML = "<p style='color:red;'>Connection succeeded!</p>";
-        
+
         // Connection succeeded; subscribe to our topic, you can add multile lines of these
         client.subscribe('UnityToDips', {qos: 1});
 
         publish_message();
-        
-        alert("Connection succeeded!");
-        window.location.replace("demomqtt.html");
 
-        // message from server which is under subcribe 
+        alert("Connection succeeded!");
+        // window.location.replace("demomqtt.html");
+        window.location.replace("demostory.html");
+
+        // message from server which is under subcribe
         client.onMessageArrived = onMessageArrived;
       },
       onFailure: function (message) {
         console.log("Connection failed: " + message.errorMessage);
         document.getElementById("conn_result").innerHTML = "<p style='color:red;'>Connection failed by error message: "+message.errorMessage+"</p>";
-        
+
         document.getElementById("rec_message").innerHTML = "<p style='color:blue;'><i>none</i></p>";
       }
     };
@@ -40,7 +41,7 @@
       // tmpList.push(message.payloadString);
       // document.getElementById("rec_message").innerHTML = JSON.stringify(mm);
       document.getElementById("rec_message").innerHTML = mm;
-      
+
       //redirected!
       createCookie('rickandmorty', mm, 1);
     }
@@ -71,11 +72,11 @@
 </head>
 
 <body>
-  <h1>Demo Web w/ paho-mqtt web page.</h1>
-  
+  <h1>Demo</h1>
+
   <fieldset>
   <legend id="Connect" > Connect and Subscribe </legend>
-    Make a connection to the server(like unity), and set up a call back used if a 
+    Make a connection to the server(like unity), and set up a call back used if a
     message arrives for this client. <br>
     Make a subscription to topic "/UnityToDips".
     <br>
@@ -85,7 +86,7 @@
     <hr>
     Receive Message <div id="rec_message"></div>
   </fieldset>
-   
+
   <fieldset>
   <legend id="Send" > Send to Unity </legend>
     <!-- Create a Message object containing the word "Hello" and then publish it at

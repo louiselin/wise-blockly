@@ -69,24 +69,30 @@
       function jsonString() {
         console.log(jsonString);
       }
+      // for (var i = 0; i < jsonParse.characters.length; i++) {
+      //   charactersname = jsonParse.characters[i].name;
+      //   charactersArray.push(charactersname);
+      //   for(var j = 0; j < jsonParse.characters[i].charEffects.length; j++) {
+      //     charEffectsname = jsonParse.characters[i].charEffects[j].name;
+      //   }
+      //
+      // }
+      // var c_str='';
+      // for (var i = 0; i < jsonParse.characters.length; i++) {
+      //   var len = jsonParse.characters[i].charEffects.length;
+      //   for (var j=0;j<len;j++) {
+      //     c_str+=jsonParse.characters[i].charEffects[j].name+" ";
+      //   }
+      //   cArray.push(jsonParse.characters[i].name+"@"+c_str);
+      //   // console.log(jsonParse.characters[i].name+"@"+c_str);
+      //   c_str='';
+      // }
+
       for (var i = 0; i < jsonParse.characters.length; i++) {
         charactersname = jsonParse.characters[i].name;
         charactersArray.push(charactersname);
-        for(var j = 0; j < jsonParse.characters[i].charEffects.length; j++) {
-          charEffectsname = jsonParse.characters[i].charEffects[j].name;
-        }
-
       }
-      var c_str='';
-      for (var i = 0; i < jsonParse.characters.length; i++) {
-        var len = jsonParse.characters[i].charEffects.length;
-        for (var j=0;j<len;j++) {
-          c_str+=jsonParse.characters[i].charEffects[j].name+" ";
-        }
-        cArray.push(jsonParse.characters[i].name+"@"+c_str);
-        // console.log(jsonParse.characters[i].name+"@"+c_str);
-        c_str='';
-      }
+      // console.log(charactersArray[0]);
 
       for (var i = 0; i < jsonParse.effects.length; i++) {
         effectsname = jsonParse.effects[i].name;
@@ -545,40 +551,59 @@
             var c = '';
             c += '<block type="'+charactersArray[i]+'"></block>';
             document.write(c);
-        }
 
-        for (var i =0; i< cArray.length; i++){
-          var c = '', eff = '';
-          var a = cArray[i].split("@");
-          var aa = a[1].split(" ");
-          var b = a[1].split(" ").length-1;
 
-          for (var j=0; j<b; j++){
+        // for (var i =0; i< cArray.length; i++){
+        //   var c = '', eff = '';
+        //   var a = cArray[i].split("@");
+        //   var aa = a[1].split(" ");
+        //   var b = a[1].split(" ").length-1;
+        //
+        //   for (var j=0; j<b; j++){
+        //
+        //     if (j==b-1){
+        //       eff += '["'+aa[j]+'", "'+aa[j]+'"]';
+        //     } else {
+        //       eff += '["'+aa[j]+'", "'+aa[j]+'"], ';
+        //     }
+        //     c+= eval('Blockly.Blocks["'+a[0]+'"] = {'+
+        //         'init: function() {this.appendDummyInput().appendField("'+ a[0] +'")'+
+        //                            '.appendField(new Blockly.FieldDropdown(['+eff+
+        //                            ']), "EFF")'+
+        //           '.appendField(", position(x=")'+
+        //           '.appendField(new Blockly.FieldNumber(0.0), "position_x")'+
+        //           '.appendField(", y=")'+
+        //           '.appendField(new Blockly.FieldNumber("0.0"), "position_y")'+
+        //           '.appendField(", z=")'+
+        //           '.appendField(new Blockly.FieldNumber("0.0"), "position_z")'+
+        //           '.appendField(")");'+
+        //           'this.setPreviousStatement(true, "Field");'+
+        //           'this.setNextStatement(true, "Field");'+
+        //           'this.setColour(290);'+
+        //           'this.setTooltip("Character for chosing Action.");'+
+        //         '}};');
+        //   }
+        // }
 
-            if (j==b-1){
-              eff += '["'+aa[j]+'", "'+aa[j]+'"]';
-            } else {
-              eff += '["'+aa[j]+'", "'+aa[j]+'"], ';
-            }
-            c+= eval('Blockly.Blocks["'+a[0]+'"] = {'+
-                'init: function() {this.appendDummyInput().appendField("'+ a[0] +'")'+
-                                   '.appendField(new Blockly.FieldDropdown(['+eff+
-                                   ']), "EFF")'+
-                  '.appendField(", position(x=")'+
-                  '.appendField(new Blockly.FieldNumber(0.0), "position_x")'+
-                  '.appendField(", y=")'+
-                  '.appendField(new Blockly.FieldNumber("0.0"), "position_y")'+
-                  '.appendField(", z=")'+
-                  '.appendField(new Blockly.FieldNumber("0.0"), "position_z")'+
-                  '.appendField(")");'+
-                  'this.setPreviousStatement(true, "Field");'+
-                  'this.setNextStatement(true, "Field");'+
-                  'this.setColour(290);'+
-                  'this.setTooltip("Character for chosing Action.");'+
-                '}};');
+        var cc = '';
+        cc+= eval('Blockly.Blocks["'+charactersArray[i]+'"] = {'+
+            'init: function() {'+
+            // 'this.appendValueInput("Field").setCheck(null).appendField("'+ effectsArray[i] +'");'+
+              'this.appendDummyInput().appendField("'+ charactersArray[i] +'")'+
+              '.appendField(", position(x=")'+
+              '.appendField(new Blockly.FieldNumber("0.0"), "position_x")'+
+              '.appendField(", y=")'+
+              '.appendField(new Blockly.FieldNumber("0.0"), "position_y")'+
+              '.appendField(", z=")'+
+              '.appendField(new Blockly.FieldNumber("0.0"), "position_z")'+
+              '.appendField(")");'+
+              'this.setPreviousStatement(true, "Field");'+
+              'this.setNextStatement(true, "Field");'+
+              'this.setColour(65);'+
+              'this.setTooltip("It is Action.");'+
+            '}};');
+
           }
-        }
-
       </script>
 
     </category>

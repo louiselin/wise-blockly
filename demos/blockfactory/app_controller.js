@@ -64,7 +64,7 @@ AppController = function() {
   this.tabMap[AppController.EXPORTER] =
       document.getElementById('blocklibraryExporter_tab');
   this.tabMap[AppController.OBJECTS_PROPERTIES] =
-      document.getElementById('objectsProperties_tab');    
+      document.getElementById('objectsProperties_tab');
 
   // Last selected tab.
   this.lastSelectedTab = null;
@@ -481,7 +481,7 @@ var bgjson = '{                   \
   "action": "create-background",  \
   "id": "BGobj-01",               \
   "name": "BG-City"               \
-}'; 
+}';
 var charjson = '{               \
   "action": "create-character",   \
   "id": "birdman-01",             \
@@ -495,13 +495,13 @@ var charjson = '{               \
 }                                 \
 ';
 
-
+// dips changing here!
 AppController.prototype.assignLibraryClickHandlers = function() {
   var self = this;
 
   // Button for saving block to library.
   document.getElementById('saveToBlockLibraryButton').addEventListener('click',
-      
+
       function() {
         // var format = document.getElementById('format').value;
         var code = document.getElementById('languagePre').textContent;
@@ -513,11 +513,11 @@ AppController.prototype.assignLibraryClickHandlers = function() {
           var new_json = { };
           var jj = '';
 
-          if (length == 2) {
+          if (jp.args0[0].action == 'create-character') {
             new_json.action = jp.args0[0].action;
             new_json.id = jp.type;
             new_json.name = jp.args0[0].type;
-            new_json.dataTopic = jp.args0[1].text;
+            new_json.dataTopic = 'mocap'+'-data'+'-01';
             new_json.position = { };
             new_json.position.x = jp.args0[0].position_x;
             new_json.position.y = jp.args0[0].position_y;
@@ -526,9 +526,9 @@ AppController.prototype.assignLibraryClickHandlers = function() {
             if(jp.args0[0].position_x != null || jp.args0[0].position_y != null || jp.args0[0].position_z != null) {
               jj = JSON.stringify(new_json);
               console.log(jj);
-              
+
               // To DipsToUnity
-                var wsbroker = "140.119.163.200";  
+                var wsbroker = "140.119.163.200";
                 var wsport = 9001;
                 var client = new Paho.MQTT.Client(wsbroker, wsport, "myclientid_" + parseInt(Math.random() * 100, 10));
 
@@ -548,14 +548,13 @@ AppController.prototype.assignLibraryClickHandlers = function() {
                   }
                 };
                 client.connect(options);
-                
+
             } else if (jp.args0[1].action != 'topic') {
               alert("The Block is at the wrong place!");
             } else {
               alert("Wrong Block to be chosen!");
             }
-
-          } else if (length == 1) {
+          } else {
             new_json.action = jp.args0[0].action;
             new_json.id = jp.type;
             new_json.name = jp.args0[0].type;
@@ -564,7 +563,7 @@ AppController.prototype.assignLibraryClickHandlers = function() {
             console.log(jj);
 
             // To DipsToUnity
-            var wsbroker = "140.119.163.200";  
+            var wsbroker = "140.119.163.200";
             var wsport = 9001;
             var client = new Paho.MQTT.Client(wsbroker, wsport, "myclientid_" + parseInt(Math.random() * 100, 10));
 
@@ -584,11 +583,9 @@ AppController.prototype.assignLibraryClickHandlers = function() {
               }
             };
             client.connect(options);
-            
-            
-          } else {
-            alert("Wrong Format to be accecpted!");
-          }
+
+
+          } 
 
           self.blockLibraryController.saveToBlockLibrary();
         } else {
@@ -598,7 +595,7 @@ AppController.prototype.assignLibraryClickHandlers = function() {
         }
       });
 
- 
+
 
 
   // Button for removing selected block from library.
@@ -617,10 +614,10 @@ AppController.prototype.assignLibraryClickHandlers = function() {
           new_json.id = blockType;
 
           var jj = JSON.stringify(new_json);
-          
+
 
           // To DipsToUnity
-                var wsbroker = "140.119.163.200";  
+                var wsbroker = "140.119.163.200";
                 var wsport = 9001;
                 var client = new Paho.MQTT.Client(wsbroker, wsport, "myclientid_" + parseInt(Math.random() * 100, 10));
 
@@ -882,7 +879,7 @@ AppController.prototype.init = function() {
 
 
 
-  
+
 
   // Add tab handlers for switching between Block Factory and Block Exporter.
   this.addTabHandlers(this.tabMap);

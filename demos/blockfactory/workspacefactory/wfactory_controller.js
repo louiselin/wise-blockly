@@ -349,59 +349,58 @@ WorkspaceFactoryController.prototype.exportXmlFile = function(exportMode) {
      var parser = new DOMParser();
      var xmlDoc = parser.parseFromString(configXml,"text/xml");
      // confirm if_else
-     var block_type = xmlDoc.getElementsByTagName('block')[0].getAttributeNode('type').value;
+     var targetId = xmlDoc.getElementsByTagName('block')[0].getAttributeNode('type').value;
+     var block_type = xmlDoc.getElementsByTagName('block')[1].getAttributeNode('type').value;
+     console.log(xmlDoc);
 
-     try {
+
+    //  try {
          if (block_type == 'controls_if') {
            // [if] => value
            var if_block = xmlDoc.getElementsByTagName('value')[0].getAttributeNode('name').value;
            if (if_block == 'IF0') {
-             var x = xmlDoc.getElementsByTagName('value')[0].getElementsByTagName('block')[0].getAttributeNode('type').value;
+             var x = xmlDoc.getElementsByTagName('value')[0].getElementsByTagName('block')[0].getAttributeNode('type').value; // like, righthandup
            } else {
-             alert('Empty upper Block');
+             console.log(err);
            }
 
            var else_block = xmlDoc.getElementsByTagName('statement')[0].getAttributeNode('name').value;
            if (else_block == 'DO0') {
-             var y = xmlDoc.getElementsByTagName('statement')[0].getElementsByTagName('block')[0].getAttributeNode('type').value;
+             var y = xmlDoc.getElementsByTagName('statement')[0].getElementsByTagName('block')[0].getAttributeNode('type').value; // like, flame effect
            } else {
-             alert('Empty bottom Block');
+             console.log(err);
            }
 
          } else {
-           alert('Error type to be built.');
+           console.log(err);
          }
 
 
-      // console.log(configXml);
 
 
-      var code = document.getElementById('languagePre').textContent;
-      var j = JSON.parse(code);
-      var len = j.args0.length;
-      var define_action = j.args0[0].action;
-      var effect_type = '';
-      if (define_action == 'create-character') {
-        effect_type = 'characterEffect';
-      } else {
-        effect_type = 'other';
-      }
-
+    //   var code = document.getElementById('languagePre').textContent;
+    //   console.log(code);
+    //   var j = JSON.parse(code);
+    //   var define_action = j.args0[0].action;
+      var effect_type = 'other';
       var effect_name = '';
-
-      if (len == 1) {
-        effect_name = j.args0[0].type;
-      } else if (len == 2) {
-        effect_name = j.args0[0].text;
-      }
-
-      // console.log('code', code);
-      // console.log('effect_name', effect_name);
-
+    //   effect_name = j.args0[0].type;
+    //
       // xml to json
       var c_id = "";
       var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
       for( var i=0; i < 7; i++ ) c_id += possible.charAt(Math.floor(Math.random() * possible.length));
+
+      switch (y) {
+        case 'rainbow':
+          effect_name = 'RainbowEffect';
+          break;
+        case 'flame':
+          effect_name = 'FlameEffect';
+          break;
+        default: effect_name = 'ExplodeEffect';
+
+      }
 
 
       var create_rule = { };
@@ -411,12 +410,12 @@ WorkspaceFactoryController.prototype.exportXmlFile = function(exportMode) {
       create_rule.event = x;
       create_rule.effectType = effect_type;
       create_rule.effectName = effect_name;
-      create_rule.targetId = y;
+      create_rule.targetId = targetId;
 
       cr = JSON.stringify(create_rule);
       console.log(cr);
 
-      // To DipsToUnity
+    //   // To DipsToUnity
       var wsbroker = "140.119.163.200";
       var wsport = 9001;
       var client = new Paho.MQTT.Client(wsbroker, wsport, "myclientid_" + parseInt(Math.random() * 100, 10));
@@ -438,12 +437,13 @@ WorkspaceFactoryController.prototype.exportXmlFile = function(exportMode) {
       };
       client.connect(options);
 
-
-
-
-    } catch (err) {
-      alert('Error type to be built.');
-    }
+    //
+    //
+    //
+    // } catch (err) {
+    //   // alert('Error type to be built.');
+    //   console.log(err);
+    // }
 
 
   // Download file.

@@ -49,7 +49,7 @@ Blockly.Blocks['factory_base'] = {
 
           // for dips changing here!!!
           this.sourceBlock_.updateShape_('NONE');
-          // Connect a shadow block to this new input. 
+          // Connect a shadow block to this new input.
           this.sourceBlock_.spawnOutputShadow_('NONE');
         });
     this.appendDummyInput()
@@ -192,7 +192,7 @@ Blockly.Blocks['input_statement'] = {
   // Statement input.
   init: function() {
     this.jsonInit({
-      "message0": "statement input %1 %2",
+      "message0": "statement input %1",
       "args0": [
         {
           "type": "field_input",
@@ -205,8 +205,6 @@ Blockly.Blocks['input_statement'] = {
       ],
       "message1": FIELD_MESSAGE,
       "args1": FIELD_ARGS,
-      "message2": TYPE_MESSAGE,
-      "args2": TYPE_ARGS,
       "previousStatement": "Input",
       "nextStatement": "Input",
       "colour": 210,
@@ -978,7 +976,3 @@ function inputNameCheck(referenceBlock) {
       'There are ' + count + ' input blocks\n with this name.' : null;
   referenceBlock.setWarningText(msg);
 }
-
-
-
-

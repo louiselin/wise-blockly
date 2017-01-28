@@ -506,9 +506,10 @@ AppController.prototype.assignLibraryClickHandlers = function() {
         // var format = document.getElementById('format').value;
         var code = document.getElementById('languagePre').textContent;
         var jp = JSON.parse(code);
+        console.log(code);
         var blockType = jp.type;
         if(blockType != 'block_type') {
-          var length = jp.args0.length;
+          // var length = jp.args0.length;
           var str = '';
           var new_json = { };
           var jj = '';
@@ -517,13 +518,13 @@ AppController.prototype.assignLibraryClickHandlers = function() {
             new_json.action = jp.args0[0].action;
             new_json.id = jp.type;
             new_json.name = jp.args0[0].type;
-            new_json.dataTopic = 'mocap'+'-data'+'-01';
+            new_json.dataTopic = jp.args0[0].dataTopic;
             new_json.position = { };
             new_json.position.x = jp.args0[0].position_x;
             new_json.position.y = jp.args0[0].position_y;
             new_json.position.z = jp.args0[0].position_z;
 
-            if(jp.args0[0].position_x != null || jp.args0[0].position_y != null || jp.args0[0].position_z != null) {
+            if(jp.args0[0].position_x != null || jp.args0[0].position_y != null || jp.args0[0].position_z != null || jp.args0[0].dataTopic != null) {
               jj = JSON.stringify(new_json);
               console.log(jj);
 
@@ -585,7 +586,7 @@ AppController.prototype.assignLibraryClickHandlers = function() {
             client.connect(options);
 
 
-          } 
+          }
 
           self.blockLibraryController.saveToBlockLibrary();
         } else {

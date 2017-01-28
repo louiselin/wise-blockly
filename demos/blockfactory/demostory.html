@@ -589,14 +589,16 @@
         cc+= eval('Blockly.Blocks["'+charactersArray[i]+'"] = {'+
             'init: function() {'+
             // 'this.appendValueInput("Field").setCheck(null).appendField("'+ effectsArray[i] +'");'+
-              'this.appendDummyInput().appendField("'+ charactersArray[i] +'")'+
-              '.appendField(", position(x=")'+
+              'this.appendDummyInput().appendField("'+ charactersArray[i] +':");'+
+              'this.appendDummyInput().appendField("  position(x=")'+
               '.appendField(new Blockly.FieldNumber("0.0"), "position_x")'+
               '.appendField(", y=")'+
               '.appendField(new Blockly.FieldNumber("0.0"), "position_y")'+
               '.appendField(", z=")'+
               '.appendField(new Blockly.FieldNumber("0.0"), "position_z")'+
               '.appendField(")");'+
+              'this.appendDummyInput().appendField("  sub_topic_name=")'+
+              '.appendField(new Blockly.FieldTextInput("mocap-data-01"), "dataTopic");'+
               'this.setPreviousStatement(true, "Field");'+
               'this.setNextStatement(true, "Field");'+
               'this.setColour(65);'+
@@ -656,10 +658,10 @@
     </category>
 
 
-    <sep></sep>
+    <!-- <sep></sep>
     <category name="Topic">
       <block type="topic"></block>
-    </category>
+    </category> -->
 
   </xml>
 

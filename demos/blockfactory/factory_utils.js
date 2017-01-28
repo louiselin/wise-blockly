@@ -504,7 +504,8 @@ FactoryUtils.getFieldsJson_ = function(block) {
           fields.push({
             type: block.type,
             action: 'create-character',
-            dataTopic: "mocap-data-01",
+            dataTopic: block.getFieldValue('dataTopic'),
+            // dataTopic: 'mocap-data-01',
             position_x: block.getFieldValue('position_x'),
             position_y: block.getFieldValue('position_y'),
             position_z: block.getFieldValue('position_z')
@@ -570,7 +571,7 @@ FactoryUtils.getFieldsJson_ = function(block) {
             action: 'create-effect'
           });
           break;
-        
+
         case 'field_static':
           // Result: 'hello'
           fields.push(block.getFieldValue('TEXT'));

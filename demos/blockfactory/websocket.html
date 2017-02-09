@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js" type="text/javascript"></script>
+  <title>mqtt js client demo</title>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script type="text/javascript">
+    var wsbroker = "140.119.163.200";  //mqtt websocket enabled brokers (topic)
+    var wsport = 9001 // port for above
+    var client = new Paho.MQTT.Client(wsbroker, wsport, "myclientid_" + parseInt(Math.random() * 100, 10));
+
+    var options = {
+      timeout: 3,
+      onSuccess: function () {
+        console.log("Connection succeeded!");
+
+        // Connection succeeded; subscribe to our topic, you can add multile lines of these
+        var topic_name = document.getElementById('topic_name').value;
+        client.subscribe(topic_name, {qos: 1});
+        // publish_message();
+        client.onMessageArrived = onMessageArrived;
+
+      },
+      onFailure: function (message) {
+        console.log("Connection failed: " + message.errorMessage);
+      }
+    };
+
+    // 收到訊息
+    function onMessageArrived(message) {
+      console.log(message.destinationName, ' -- ', message.payloadString);
+      var mm = message.payloadString;
+      createCookie('rickandmorty', mm, 1);
+      console.log('receive message', mm);
+      //redirected!
+
+    }
+    // 發佈訊息
+    function publish_message() {
+
+        var input_text = document.getElementById("mqtt_text");
+        var payload = input_text.value;
+        var message = new Paho.MQTT.Message(payload);
+        message.destinationName = "DipsToUnity";
+        client.send(message);
+
+        alert("Connection succeeded!");
+        window.location.replace("demostory.html");
+    }
+    function init() {
+      client.connect(options);
+    }
+
+    function createCookie(name,value,days) {
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime()+(days*24*60*60*1000));
+            var expires = "; expires="+date.toGMTString();
+        }
+        else var expires = "";
+        document.cookie = name+"="+value+expires+"; path=/";
+    }
+  </script>
+</head>
+
+<body onload="init();">
+<div class="container" style="margin-top: 50px;width: 50%;">
+<fieldset>
+  <!-- <div class="jumbotron" style="margin-top: 50px;"> -->
+    <legend style="color: #fff;padding: 15px;background: #FF7052;"><h1> Connect and Subscribe </h1></legend>
+      <p class="lead" style="padding: 15px;">Make a connection to the server and set up a call back used if a message arrives for this client.
+        Make a subscription to topic <input type="text" style="padding-left: 15px; color: #FF7052;" id="topic_name" value="UnityToDips"/>.
+        &nbsp;
+        <input type="button" class="btn btn-default" value="Subscribe" name="Connect" id="mqtt_conn_sub" onClick="publish_message();" />
+        <input style="visibility: hidden;" type="text" id="mqtt_text" value='{"action": "request-data"}' />
+      </p>
+
+  <!-- </div> -->
+</fieldset>
+</div>
+</body>
+</html>

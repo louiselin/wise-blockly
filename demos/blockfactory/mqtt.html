@@ -22,7 +22,6 @@
         alert("Connection succeeded!");
         // window.location.replace("demomqtt.html");
         window.location.replace("demostory.html");
-
         // message from server which is under subcribe
         client.onMessageArrived = onMessageArrived;
       },
@@ -54,6 +53,8 @@
         client.send(message);
         document.getElementById("send_message").innerHTML = payload;
         // alert("Successfully.");
+
+
     }
     function init() {
       client.connect(options);
@@ -93,7 +94,7 @@
     the server. -->
     Create a Message to publish it at the server.
     <br>
-    <input type="text" id="mqtt_text" value='{"action": "request-data"}' />
+    <input type="text" class="width: 200px;" id="mqtt_text" value='{"action": "request-data"}' />
     <button id="mqtt_pub" onclick="publish_message();">Publish</button>
     <hr>
     Send Message <div id="send_message"></div>

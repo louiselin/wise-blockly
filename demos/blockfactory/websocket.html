@@ -2,7 +2,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js" type="text/javascript"></script>
-  <title>mqtt js client demo</title>
+  <title>WebSocket Connection</title>
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script type="text/javascript">
@@ -69,8 +69,8 @@
 <fieldset>
   <!-- <div class="jumbotron" style="margin-top: 50px;"> -->
     <legend style="color: #fff;padding: 15px;background: #FF7052;"><h1> Connect and Subscribe </h1></legend>
-      <p class="lead" style="padding: 15px;">Make a connection to the server and set up a call back used if a message arrives for this client.
-        Make a subscription to topic <input type="text" style="padding-left: 15px; color: #FF7052;" id="topic_name" value="UnityToDips"/>.
+      <p class="lead" style="padding: 15px;">You need to open up the Unity Device at first. Then, building a new WebSocket connection and subscription.<br>
+        Make a subscription topic <input type="text" style="padding-left: 15px; color: #FF7052;" id="topic_name" value="UnityToDips"/>.
         &nbsp;
         <input type="button" class="btn btn-default" value="Subscribe" name="Connect" id="mqtt_conn_sub" onClick="publish_message();" />
         <input style="visibility: hidden;" type="text" id="mqtt_text" value='{"action": "request-data"}' />

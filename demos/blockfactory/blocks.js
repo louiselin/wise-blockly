@@ -32,13 +32,13 @@ Blockly.Blocks['factory_base'] = {
         .appendField(new Blockly.FieldTextInput('block_type'), 'NAME');
     this.appendStatementInput('INPUTS')
         .setCheck('Input')
-        .appendField('inputs');
+        .appendField('input');
     var dropdown = new Blockly.FieldDropdown([
         ['automatic inputs', 'AUTO'],
         ['external inputs', 'EXT'],
         ['inline inputs', 'INT']]);
-    this.appendDummyInput()
-        .appendField(dropdown, 'INLINE');
+    // this.appendDummyInput()
+    //     .appendField(dropdown, 'INLINE');
     dropdown = new Blockly.FieldDropdown([
         ['no connections', 'NONE'],
         ['← left output', 'LEFT'],
@@ -53,6 +53,7 @@ Blockly.Blocks['factory_base'] = {
           this.sourceBlock_.spawnOutputShadow_('NONE');
         });
     this.appendDummyInput()
+        .appendField('connection')
         .appendField(dropdown, 'CONNECTIONS');
     this.appendValueInput('COLOUR')
         .setCheck('Colour')

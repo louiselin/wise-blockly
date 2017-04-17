@@ -26,7 +26,12 @@ The Workspace Factory makes it easy to configure a toolbox and the default set o
 ## Procedure ##
 1. 接受 WISE Performer 模組資訊
     * 打開Unity－mac os執行檔（WISE Director外操作）
-    * WISE Director上，連線（UnityToDips）
+    * WISE Director上，連線（DipsToWise）
+         ```
+            {
+            	"action" : "request-data"
+            }
+         ```
 2. WISE Director腳本建立（場景 3為例）
     * 創建背景 （DipsToUnity）
         ```
@@ -36,6 +41,7 @@ The Workspace Factory makes it easy to configure a toolbox and the default set o
             	"objectId" : "bg-001",
             	"initStatus" : "true"
             }
+        ```
     * 創建角色
         ```
                 {
@@ -49,6 +55,7 @@ The Workspace Factory makes it easy to configure a toolbox and the default set o
                 		"z" : "2.0"
                 	}
                 }
+         ```
     * 規則建立
         ```
                 {
@@ -59,3 +66,4 @@ The Workspace Factory makes it easy to configure a toolbox and the default set o
                 	"effectName": "WingsUp",
                 	"targetId": "birdman-01"
                 }
+```

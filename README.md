@@ -25,6 +25,7 @@ The Workspace Factory makes it easy to configure a toolbox and the default set o
 
 ## Procedure ##
 1. 接受 WISE Performer 模組資訊
+    
     * 打開Unity－mac os執行檔（WISE Director外操作）
     * WISE Director上，連線（DipsToWise）
          ```
@@ -66,4 +67,4 @@ The Workspace Factory makes it easy to configure a toolbox and the default set o
                 	"effectName": "WingsUp",
                 	"targetId": "birdman-01"
                 }
-```
+         
